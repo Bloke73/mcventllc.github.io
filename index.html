@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McVent Command Center</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --navy:    #0d1b2a;
+    --ink:     #111c2b;
+    --panel:   #172233;
+    --card:    #1c2d42;
+    --border:  #243549;
+    --gold:    #c9a84c;
+    --gold2:   #e8c56a;
+    --muted:   #4a6580;
+    --text:    #d4dfe8;
+    --bright:  #eaf2fa;
+    --green:   #3ecf8e;
+    --amber:   #f5a623;
+    --red:     #e05555;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--ink);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .logo-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+
+  .logo-sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-left: 1px solid var(--border);
+    padding-left: 16px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  .dot.amber { background: var(--amber); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .date-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── ALERT BANNER ── */
+  .alert-banner {
+    background: linear-gradient(90deg, rgba(245,166,35,0.12) 0%, rgba(245,166,35,0.04) 100%);
+    border-bottom: 1px solid rgba(245,166,35,0.25);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--amber);
+  }
+
+  .alert-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    background: rgba(245,166,35,0.15);
+    border: 1px solid rgba(245,166,35,0.3);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  .alert-banner a {
+    color: var(--gold2);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+
+  .alert-banner a:hover { text-decoration: underline; }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 28px 24px 60px;
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+  }
+
+  .page-title {
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .page-sub {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 36px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .section-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--border);
+    margin-left: auto;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .grid-wide {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  /* ── TILE ── */
+  .tile {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.15s, background 0.15s, transform 0.12s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tile::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .tile:hover {
+    border-color: rgba(201,168,76,0.4);
+    background: #213047;
+    transform: translateY(-2px);
+  }
+
+  .tile:hover::before { opacity: 1; }
+
+  .tile-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .tile-emoji {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .tile-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  .badge-active {
+    background: rgba(62,207,142,0.12);
+    color: var(--green);
+    border: 1px solid rgba(62,207,142,0.25);
+  }
+
+  .badge-pending {
+    background: rgba(245,166,35,0.12);
+    color: var(--amber);
+    border: 1px solid rgba(245,166,35,0.25);
+  }
+
+  .badge-new {
+    background: rgba(201,168,76,0.12);
+    color: var(--gold2);
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .tile-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--bright);
+    line-height: 1.2;
+  }
+
+  .tile-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* ── WIDE TILE (for important items) ── */
+  .tile-wide {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+  }
+
+  .tile-wide .tile-emoji { font-size: 26px; }
+
+  .tile-wide-body { flex: 1; }
+
+  .tile-wide .tile-name { font-size: 13px; }
+  .tile-wide .tile-desc { font-size: 11px; margin-top: 2px; }
+
+  /* ── QUICK STATUS ROW ── */
+  .status-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-value.gold { color: var(--gold2); }
+  .stat-value.green { color: var(--green); }
+  .stat-value.amber { color: var(--amber); }
+
+  .stat-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ── SEARCH ── */
+  .search-wrap {
+    margin-bottom: 28px;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 420px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px 10px 38px;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234a6580' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+  }
+
+  .search-input:focus { border-color: rgba(201,168,76,0.4); }
+  .search-input::placeholder { color: var(--muted); }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .topbar { padding: 0 14px; }
+    .logo-sub { display: none; }
+    .main { padding: 20px 14px 40px; }
+    .page-sub { font-size: 22px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .status-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="logo-mark">McVENT</span>
+    <span class="logo-sub">Command Center</span>
+  </div>
+  <div class="topbar-right">
+    <div class="status-pill">
+      <div class="dot"></div>
+      <span id="live-time"></span>
+    </div>
+    <div class="date-display" id="live-date"></div>
+  </div>
+</div>
+
+<!-- ALERT BANNER -->
+<div class="alert-banner">
+  <span class="alert-label">⚡ Action</span>
+  <span>UI Certification window opened today — certify at
+    <a href="https://myui.coworkforce.com/" target="_blank" rel="noopener">myUI.coworkforce.com</a>
+    &nbsp;·&nbsp; IC-26Y2654321807495830
+  </span>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="page-header">
+    <div class="page-title">// MCVENT LLC · LAFAYETTE, CO</div>
+    <div class="page-sub">Operations Hub</div>
+  </div>
+
+  <!-- QUICK STATS -->
+  <div class="status-row">
+    <div class="stat-card">
+      <div class="stat-label">Business</div>
+      <div class="stat-value green">Active</div>
+      <div class="stat-note">CO SOS · 20261635761</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">VA Intent to File</div>
+      <div class="stat-value gold">Filed</div>
+      <div class="stat-note">Conf. 16927624 · May 29</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">UI Claim</div>
+      <div class="stat-value amber">Certify Now</div>
+      <div class="stat-note">Window opened today</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Quit Smoking</div>
+      <div class="stat-value green" id="quit-days">—</div>
+      <div class="stat-note">Since May 24, 2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">PERA Rollover</div>
+      <div class="stat-value amber">Pending</div>
+      <div class="stat-note">Final check ~July 25</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Solo 401(k)</div>
+      <div class="stat-value green">Open</div>
+      <div class="stat-note">Fidelity · 266530043</div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <input class="search-input" type="text" id="search" placeholder="Filter links..." autocomplete="off">
+  </div>
+
+  <!-- SECTION: FINANCE & BANKING -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">💰</span>
+      <span class="section-title">Finance & Banking</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://app.relayfi.com" target="_blank" rel="noopener" data-tags="relay banking checking business">
+        <div class="tile-top"><span class="tile-emoji">🏦</span><span class="tile-badge badge-active">Active</span></div>
+        <div class="tile-name">Relay Banking</div>
+        <div class="tile-desc">McVent business checking & accounts</div>
+      </a>
+      <a class="tile" href="https://books.zoho.com" target="_blank" rel="noopener" data-tags="zoho books accounting expenses">
+        <div class="tile-top"><span class="tile-emoji">📒</span><span class="tile-badge badge-active">Active</span></div>
+        <div class="tile-name">Zoho Books</div>
+        <div class="tile-desc">Accounting, invoices, expense tracking</div>
+      </a>
+      <a class="tile" href="https://www.fidelity.com/login" target="_blank" rel="noopener" data-tags="fidelity 401k retirement solo">
+        <div class="tile-top"><span class="tile-emoji">📈</span><span class="tile-badge badge-active">Active</span></div>
+        <div class="tile-name">Fidelity 401(k)</div>
+        <div class="tile-desc">Solo 401(k) · Acct 266530043</div>
+      </a>
+      <a class="tile" href="https://mypera.org" target="_blank" rel="noopener" data-tags="pera retirement rollover colorado">
+        <div class="tile-top"><span class="tile-emoji">🔄</span><span class="tile-badge badge-pending">Pending</span></div>
+        <div class="tile-name">PERA</div>
+        <div class="tile-desc">Rollover in progress · ~July 25</div>
+      </a>
+      <a class="tile" href="https://www.irs.gov/payments/your-online-account" target="_blank" rel="noopener" data-tags="irs taxes federal account">
+        <div class="tile-top"><span class="tile-emoji">🏛️</span></div>
+        <div class="tile-name">IRS Account</div>
+        <div class="tile-desc">Federal tax account & payments</div>
+      </a>
+      <a class="tile" href="https://www.eftps.gov/eftps/" target="_blank" rel="noopener" data-tags="eftps tax payments federal">
+        <div class="tile-top"><span class="tile-emoji">💳</span></div>
+        <div class="tile-name">EFTPS</div>
+        <div class="tile-desc">Federal tax deposit system</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION: UNEMPLOYMENT & BENEFITS -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">📋</span>
+      <span class="section-title">Benefits & UI</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://myui.coworkforce.com/" target="_blank" rel="noopener" data-tags="unemployment UI certify colorado">
+        <div class="tile-top"><span class="tile-emoji">📝</span><span class="tile-badge badge-pending">Certify</span></div>
+        <div class="tile-name">Colorado UI</div>
+        <div class="tile-desc">Weekly certification · Window open now</div>
+      </a>
+      <a class="tile" href="https://www.va.gov" target="_blank" rel="noopener" data-tags="VA veterans affairs benefits">
+        <div class="tile-top"><span class="tile-emoji">🎖️</span><span class="tile-badge badge-active">Filed</span></div>
+        <div class="tile-name">VA.gov</div>
+        <div class="tile-desc">Benefits, healthcare, Intent to File</div>
+      </a>
+      <a class="tile" href="https://www.myhealth.va.gov" target="_blank" rel="noopener" data-tags="VA health my healthevet">
+        <div class="tile-top"><span class="tile-emoji">🏥</span></div>
+        <div class="tile-name">My HealtheVet</div>
+        <div class="tile-desc">VA healthcare portal · Boulder clinic</div>
+      </a>
+      <a class="tile" href="https://www.ebenefits.va.gov" target="_blank" rel="noopener" data-tags="ebenefits VA disability claim">
+        <div class="tile-top"><span class="tile-emoji">🛡️</span></div>
+        <div class="tile-name">eBenefits</div>
+        <div class="tile-desc">Disability claims & status</div>
+      </a>
+      <a class="tile" href="https://mycoloradojourney.com" target="_blank" rel="noopener" data-tags="colorado training workforce development">
+        <div class="tile-top"><span class="tile-emoji">🗺️</span></div>
+        <div class="tile-name">My CO Journey</div>
+        <div class="tile-desc">Free training & career resources</div>
+      </a>
+      <a class="tile" href="https://connectingcolorado.com" target="_blank" rel="noopener" data-tags="connecting colorado jobs workforce">
+        <div class="tile-top"><span class="tile-emoji">🔗</span></div>
+        <div class="tile-name">Connecting CO</div>
+        <div class="tile-desc">Workforce center job board</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION: BUSINESS & LEGAL -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">⚖️</span>
+      <span class="section-title">Business & Legal</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://www.sos.state.co.us/biz/BusinessEntityCriteriaExt.do" target="_blank" rel="noopener" data-tags="SOS colorado secretary state mcvent LLC filing">
+        <div class="tile-top"><span class="tile-emoji">🏢</span><span class="tile-badge badge-active">Active</span></div>
+        <div class="tile-name">Colorado SOS</div>
+        <div class="tile-desc">McVent LLC filing · ID 20261635761</div>
+      </a>
+      <a class="tile" href="https://www.irs.gov/businesses/small-businesses-self-employed/employer-id-numbers" target="_blank" rel="noopener" data-tags="EIN employer ID number IRS tax">
+        <div class="tile-top"><span class="tile-emoji">🔢</span></div>
+        <div class="tile-name">EIN Reference</div>
+        <div class="tile-desc">IRS employer identification number</div>
+      </a>
+      <a class="tile" href="https://www.colorado.gov/pacific/tax/business" target="_blank" rel="noopener" data-tags="colorado taxes department revenue business">
+        <div class="tile-top"><span class="tile-emoji">📑</span></div>
+        <div class="tile-name">CO Dept of Revenue</div>
+        <div class="tile-desc">State taxes & business filings</div>
+      </a>
+      <a class="tile" href="https://sam.gov" target="_blank" rel="noopener" data-tags="SAM federal contractor registration government">
+        <div class="tile-top"><span class="tile-emoji">🇺🇸</span></div>
+        <div class="tile-name">SAM.gov</div>
+        <div class="tile-desc">Federal contractor registration</div>
+      </a>
+      <a class="tile" href="https://militaryonesource.mil" target="_blank" rel="noopener" data-tags="military one source records veteran">
+        <div class="tile-top"><span class="tile-emoji">⚓</span></div>
+        <div class="tile-name">Military OneSource</div>
+        <div class="tile-desc">Military records & resources</div>
+      </a>
+      <a class="tile" href="https://www.archives.gov/veterans/military-service-records" target="_blank" rel="noopener" data-tags="military records NARA archives service">
+        <div class="tile-top"><span class="tile-emoji">📜</span></div>
+        <div class="tile-name">NPRC Records</div>
+        <div class="tile-desc">Military records · C-0007596722</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION: TASK & PROJECT MANAGEMENT -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">✅</span>
+      <span class="section-title">Tasks & Projects</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://todoist.com" target="_blank" rel="noopener" data-tags="todoist tasks projects todo management">
+        <div class="tile-top"><span class="tile-emoji">📌</span><span class="tile-badge badge-active">Active</span></div>
+        <div class="tile-name">Todoist</div>
+        <div class="tile-desc">McVent projects & daily tasks</div>
+      </a>
+      <a class="tile" href="https://drive.google.com" target="_blank" rel="noopener" data-tags="google drive docs files storage">
+        <div class="tile-top"><span class="tile-emoji">📁</span></div>
+        <div class="tile-name">Google Drive</div>
+        <div class="tile-desc">Files, docs, shared storage</div>
+      </a>
+      <a class="tile" href="https://docs.google.com" target="_blank" rel="noopener" data-tags="google docs documents writing">
+        <div class="tile-top"><span class="tile-emoji">📄</span></div>
+        <div class="tile-name">Google Docs</div>
+        <div class="tile-desc">Documents & writing</div>
+      </a>
+      <a class="tile" href="https://calendar.google.com" target="_blank" rel="noopener" data-tags="google calendar schedule appointments">
+        <div class="tile-top"><span class="tile-emoji">🗓️</span></div>
+        <div class="tile-name">Google Calendar</div>
+        <div class="tile-desc">Scheduling & appointments</div>
+      </a>
+      <a class="tile" href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener" data-tags="gmail personal email jmcmillin">
+        <div class="tile-top"><span class="tile-emoji">✉️</span></div>
+        <div class="tile-name">Gmail · Personal</div>
+        <div class="tile-desc">jmcmillin5973@gmail.com</div>
+      </a>
+      <a class="tile" href="https://mail.google.com/mail/u/1/#inbox" target="_blank" rel="noopener" data-tags="gmail mcvent business email">
+        <div class="tile-top"><span class="tile-emoji">📧</span><span class="tile-badge badge-new">Biz</span></div>
+        <div class="tile-name">Gmail · McVent</div>
+        <div class="tile-desc">mcventllc@gmail.com</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION: JOB SEARCH -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">💼</span>
+      <span class="section-title">Job Search</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://www.linkedin.com/jobs" target="_blank" rel="noopener" data-tags="linkedin jobs career network">
+        <div class="tile-top"><span class="tile-emoji">🔵</span></div>
+        <div class="tile-name">LinkedIn</div>
+        <div class="tile-desc">Job search & professional network</div>
+      </a>
+      <a class="tile" href="https://www.usajobs.gov" target="_blank" rel="noopener" data-tags="usajobs federal government GS jobs">
+        <div class="tile-top"><span class="tile-emoji">🏛️</span></div>
+        <div class="tile-name">USAJobs</div>
+        <div class="tile-desc">Federal jobs · GS-1700, DoDEA tracks</div>
+      </a>
+      <a class="tile" href="https://www.indeed.com" target="_blank" rel="noopener" data-tags="indeed jobs employment search">
+        <div class="tile-top"><span class="tile-emoji">🔍</span></div>
+        <div class="tile-name">Indeed</div>
+        <div class="tile-desc">General job search</div>
+      </a>
+      <a class="tile" href="https://www.edjoin.org" target="_blank" rel="noopener" data-tags="edjoin teaching education CTE jobs colorado">
+        <div class="tile-top"><span class="tile-emoji">🎓</span></div>
+        <div class="tile-name">EdJoin</div>
+        <div class="tile-desc">CTE & education positions</div>
+      </a>
+      <a class="tile" href="https://veteranscommunityproject.org" target="_blank" rel="noopener" data-tags="veterans community project VCP Longmont job">
+        <div class="tile-top"><span class="tile-emoji">🎖️</span><span class="tile-badge badge-new">Lead</span></div>
+        <div class="tile-name">Veterans Community</div>
+        <div class="tile-desc">VCP Longmont — active lead</div>
+      </a>
+      <a class="tile" href="https://www.dodea.edu/Offices/HR/employment.cfm" target="_blank" rel="noopener" data-tags="DoDEA military education overseas federal">
+        <div class="tile-top"><span class="tile-emoji">🌐</span></div>
+        <div class="tile-name">DoDEA</div>
+        <div class="tile-desc">Dept of Defense Education Activity</div>
+      </a>
+      <a class="tile" href="https://owlapply.com" target="_blank" rel="noopener" data-tags="owlapply AI resume ATS cover letter autofill job application tracker">
+        <div class="tile-top"><span class="tile-emoji">🦉</span><span class="tile-badge badge-new">AI</span></div>
+        <div class="tile-name">OwlApply</div>
+        <div class="tile-desc">AI resume builder, ATS checker, autofill & application tracker</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION: BUSINESS DEVELOPMENT -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">🚀</span>
+      <span class="section-title">Business Development</span>
+    </div>
+    <div class="grid grid-wide">
+      <a class="tile tile-wide" href="https://www.sba.gov" target="_blank" rel="noopener" data-tags="SBA small business administration grants loans">
+        <span class="tile-emoji">🏗️</span>
+        <div class="tile-wide-body">
+          <div class="tile-name">SBA</div>
+          <div class="tile-desc">Small Business Administration · loans, grants, resources</div>
+        </div>
+      </a>
+      <a class="tile tile-wide" href="https://www.score.org" target="_blank" rel="noopener" data-tags="SCORE mentorship business consulting advice">
+        <span class="tile-emoji">🧭</span>
+        <div class="tile-wide-body">
+          <div class="tile-name">SCORE</div>
+          <div class="tile-desc">Free business mentorship & consulting</div>
+        </div>
+      </a>
+      <a class="tile tile-wide" href="https://www.lafayetteco.gov/business" target="_blank" rel="noopener" data-tags="lafayette city business permits local">
+        <span class="tile-emoji">📍</span>
+        <div class="tile-wide-body">
+          <div class="tile-name">City of Lafayette</div>
+          <div class="tile-desc">Local business permits & city resources</div>
+        </div>
+      </a>
+      <a class="tile tile-wide" href="https://www.bouldersmallbiz.com" target="_blank" rel="noopener" data-tags="boulder SBDC small business development center">
+        <span class="tile-emoji">💡</span>
+        <div class="tile-wide-body">
+          <div class="tile-name">Boulder SBDC</div>
+          <div class="tile-desc">Small Business Development Center</div>
+        </div>
+      </a>
+      <a class="tile tile-wide" href="https://cdot.colorado.gov" target="_blank" rel="noopener" data-tags="CDOT I-70 corridor transportation colorado">
+        <span class="tile-emoji">🛣️</span>
+        <div class="tile-wide-body">
+          <div class="tile-name">CDOT</div>
+          <div class="tile-desc">I-70 staging area concept contacts</div>
+        </div>
+      </a>
+      <a class="tile tile-wide" href="https://www.vetbiz.gov" target="_blank" rel="noopener" data-tags="veteran owned VOSB certification contracts">
+        <span class="tile-emoji">⭐</span>
+        <div class="tile-wide-body">
+          <div class="tile-name">VetBiz / CVE</div>
+          <div class="tile-desc">Veteran-owned biz certification (VOSB)</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION: TOOLS & PLATFORMS -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">🛠️</span>
+      <span class="section-title">Tools & Platforms</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://claude.ai" target="_blank" rel="noopener" data-tags="claude AI anthropic assistant">
+        <div class="tile-top"><span class="tile-emoji">🤖</span><span class="tile-badge badge-active">Primary</span></div>
+        <div class="tile-name">Claude AI</div>
+        <div class="tile-desc">AI assistant · strategy & ops</div>
+      </a>
+      <a class="tile" href="https://www.canva.com" target="_blank" rel="noopener" data-tags="canva design graphics marketing">
+        <div class="tile-top"><span class="tile-emoji">🎨</span></div>
+        <div class="tile-name">Canva</div>
+        <div class="tile-desc">Design & marketing materials</div>
+      </a>
+      <a class="tile" href="https://www.youtube.com/studio" target="_blank" rel="noopener" data-tags="youtube studio video content channel">
+        <div class="tile-top"><span class="tile-emoji">🎬</span></div>
+        <div class="tile-name">YouTube Studio</div>
+        <div class="tile-desc">Lafayette/Louisville content channel</div>
+      </a>
+      <a class="tile" href="https://www.linkedin.com" target="_blank" rel="noopener" data-tags="linkedin social professional network">
+        <div class="tile-top"><span class="tile-emoji">💼</span></div>
+        <div class="tile-name">LinkedIn</div>
+        <div class="tile-desc">Professional network & presence</div>
+      </a>
+      <a class="tile" href="https://mileiq.com" target="_blank" rel="noopener" data-tags="mileiq mileage tracking deduction business">
+        <div class="tile-top"><span class="tile-emoji">🚗</span></div>
+        <div class="tile-name">MileIQ</div>
+        <div class="tile-desc">Mileage tracking for deductions</div>
+      </a>
+      <a class="tile" href="https://workspace.google.com" target="_blank" rel="noopener" data-tags="google workspace admin email business">
+        <div class="tile-top"><span class="tile-emoji">⚙️</span></div>
+        <div class="tile-name">Google Workspace</div>
+        <div class="tile-desc">Admin & tools management</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION: HEALTH & WELLNESS -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">💪</span>
+      <span class="section-title">Health & Wellness</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://www.myhealth.va.gov/mhv-portal-web/secure-messaging" target="_blank" rel="noopener" data-tags="VA health secure messaging doctor">
+        <div class="tile-top"><span class="tile-emoji">💬</span><span class="tile-badge badge-pending">Schedule</span></div>
+        <div class="tile-name">VA Secure Messaging</div>
+        <div class="tile-desc">Message care team · schedule shoulder imaging</div>
+      </a>
+      <a class="tile" href="https://www.va.gov/health-care/schedule-view-va-appointments/" target="_blank" rel="noopener" data-tags="VA appointments schedule imaging shoulder">
+        <div class="tile-top"><span class="tile-emoji">📅</span><span class="tile-badge badge-pending">Needed</span></div>
+        <div class="tile-name">VA Appointments</div>
+        <div class="tile-desc">Shoulder/collarbone/hand imaging pending</div>
+      </a>
+      <a class="tile" href="https://www.nike.com/us/en/nrc-app" target="_blank" rel="noopener" data-tags="running trail training fitness tracker">
+        <div class="tile-top"><span class="tile-emoji">🏃</span></div>
+        <div class="tile-name">Run Tracker</div>
+        <div class="tile-desc">Trail runs · Speedcross 6 season</div>
+      </a>
+      <a class="tile" href="https://www.strava.com" target="_blank" rel="noopener" data-tags="strava fitness training activities">
+        <div class="tile-top"><span class="tile-emoji">🗻</span></div>
+        <div class="tile-name">Strava</div>
+        <div class="tile-desc">Training & activity tracking</div>
+      </a>
+    </div>
+  </div>
+
+</div><!-- end .main -->
+
+<div class="footer">
+  McVent LLC · Lafayette, CO · CO SOS 20261635761 · EIN on file · Veteran-Owned
+</div>
+
+<script>
+  // Live clock
+  function updateTime() {
+    const now = new Date();
+    document.getElementById('live-time').textContent =
+      now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.getElementById('live-date').textContent =
+      now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+
+  // Days since quitting
+  const quitDate = new Date('2026-05-24');
+  const today = new Date();
+  const days = Math.floor((today - quitDate) / (1000 * 60 * 60 * 24));
+  document.getElementById('quit-days').textContent = days + ' days';
+
+  // Search / filter
+  document.getElementById('search').addEventListener('input', function() {
+    const q = this.value.toLowerCase().trim();
+    document.querySelectorAll('.tile').forEach(tile => {
+      const text = (tile.dataset.tags || '') + ' ' + tile.innerText;
+      tile.style.display = (!q || text.toLowerCase().includes(q)) ? '' : 'none';
+    });
+    document.querySelectorAll('[data-section]').forEach(sec => {
+      const visible = sec.querySelectorAll('.tile:not([style*="none"])').length;
+      sec.style.display = visible ? '' : 'none';
+    });
+  });
+</script>
+</body>
+</html>
