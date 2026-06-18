@@ -32,7 +32,6 @@
     min-height: 100vh;
   }
 
-  /* ── TOP BAR ── */
   .topbar {
     background: var(--ink);
     border-bottom: 1px solid var(--border);
@@ -92,8 +91,6 @@
     animation: pulse 2.5s ease-in-out infinite;
   }
 
-  .dot.amber { background: var(--amber); }
-
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
@@ -105,39 +102,6 @@
     color: var(--muted);
   }
 
-  /* ── ALERT BANNER ── */
-  .alert-banner {
-    background: linear-gradient(90deg, rgba(245,166,35,0.12) 0%, rgba(245,166,35,0.04) 100%);
-    border-bottom: 1px solid rgba(245,166,35,0.25);
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 12px;
-    color: var(--amber);
-  }
-
-  .alert-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    background: rgba(245,166,35,0.15);
-    border: 1px solid rgba(245,166,35,0.3);
-    padding: 2px 8px;
-    border-radius: 3px;
-  }
-
-  .alert-banner a {
-    color: var(--gold2);
-    text-decoration: none;
-    font-weight: 500;
-    margin-left: 4px;
-  }
-
-  .alert-banner a:hover { text-decoration: underline; }
-
-  /* ── MAIN LAYOUT ── */
   .main {
     max-width: 1400px;
     margin: 0 auto;
@@ -164,7 +128,6 @@
     letter-spacing: -0.02em;
   }
 
-  /* ── SECTIONS ── */
   .section {
     margin-bottom: 36px;
   }
@@ -178,9 +141,7 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .section-icon {
-    font-size: 14px;
-  }
+  .section-icon { font-size: 14px; }
 
   .section-title {
     font-size: 11px;
@@ -191,14 +152,6 @@
     text-transform: uppercase;
   }
 
-  .section-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--border);
-    margin-left: auto;
-  }
-
-  /* ── GRID ── */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -209,7 +162,6 @@
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
 
-  /* ── TILE ── */
   .tile {
     background: var(--card);
     border: 1px solid var(--border);
@@ -295,7 +247,6 @@
     line-height: 1.4;
   }
 
-  /* ── WIDE TILE (for important items) ── */
   .tile-wide {
     flex-direction: row;
     align-items: center;
@@ -304,57 +255,11 @@
   }
 
   .tile-wide .tile-emoji { font-size: 26px; }
-
   .tile-wide-body { flex: 1; }
-
   .tile-wide .tile-name { font-size: 13px; }
   .tile-wide .tile-desc { font-size: 11px; margin-top: 2px; }
 
-  /* ── QUICK STATUS ROW ── */
-  .status-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    margin-bottom: 32px;
-  }
-
-  .stat-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-  }
-
-  .stat-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .stat-value {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--bright);
-    letter-spacing: -0.02em;
-  }
-
-  .stat-value.gold { color: var(--gold2); }
-  .stat-value.green { color: var(--green); }
-  .stat-value.amber { color: var(--amber); }
-
-  .stat-note {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  /* ── SEARCH ── */
-  .search-wrap {
-    margin-bottom: 28px;
-  }
+  .search-wrap { margin-bottom: 28px; }
 
   .search-input {
     width: 100%;
@@ -376,7 +281,6 @@
   .search-input:focus { border-color: rgba(201,168,76,0.4); }
   .search-input::placeholder { color: var(--muted); }
 
-  /* ── FOOTER ── */
   .footer {
     border-top: 1px solid var(--border);
     padding: 20px 24px;
@@ -387,20 +291,17 @@
     letter-spacing: 0.06em;
   }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 640px) {
     .topbar { padding: 0 14px; }
     .logo-sub { display: none; }
     .main { padding: 20px 14px 40px; }
     .page-sub { font-size: 22px; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-    .status-row { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-left">
     <span class="logo-mark">McVENT</span>
@@ -415,16 +316,6 @@
   </div>
 </div>
 
-<!-- ALERT BANNER -->
-<div class="alert-banner">
-  <span class="alert-label">⚡ Action</span>
-  <span>UI Certification window opened today — certify at
-    <a href="https://myui.coworkforce.com/" target="_blank" rel="noopener">myUI.coworkforce.com</a>
-    &nbsp;·&nbsp; IC-26Y2654321807495830
-  </span>
-</div>
-
-<!-- MAIN -->
 <div class="main">
 
   <div class="page-header">
@@ -432,46 +323,11 @@
     <div class="page-sub">Operations Hub</div>
   </div>
 
-  <!-- QUICK STATS -->
-  <div class="status-row">
-    <div class="stat-card">
-      <div class="stat-label">Business</div>
-      <div class="stat-value green">Active</div>
-      <div class="stat-note">CO SOS · 20261635761</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">VA Intent to File</div>
-      <div class="stat-value gold">Filed</div>
-      <div class="stat-note">Conf. 16927624 · May 29</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">UI Claim</div>
-      <div class="stat-value amber">Certify Now</div>
-      <div class="stat-note">Window opened today</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Quit Smoking</div>
-      <div class="stat-value green" id="quit-days">—</div>
-      <div class="stat-note">Since May 24, 2026</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">PERA Rollover</div>
-      <div class="stat-value amber">Pending</div>
-      <div class="stat-note">Final check ~July 25</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Solo 401(k)</div>
-      <div class="stat-value green">Open</div>
-      <div class="stat-note">Fidelity · 266530043</div>
-    </div>
-  </div>
-
-  <!-- SEARCH -->
   <div class="search-wrap">
     <input class="search-input" type="text" id="search" placeholder="Filter links..." autocomplete="off">
   </div>
 
-  <!-- SECTION: FINANCE & BANKING -->
+  <!-- FINANCE & BANKING -->
   <div class="section" data-section>
     <div class="section-header">
       <span class="section-icon">💰</span>
@@ -493,55 +349,35 @@
         <div class="tile-name">Fidelity 401(k)</div>
         <div class="tile-desc">Solo 401(k) · Acct 266530043</div>
       </a>
-      <a class="tile" href="https://mypera.org" target="_blank" rel="noopener" data-tags="pera retirement rollover colorado">
-        <div class="tile-top"><span class="tile-emoji">🔄</span><span class="tile-badge badge-pending">Pending</span></div>
-        <div class="tile-name">PERA</div>
-        <div class="tile-desc">Rollover in progress · ~July 25</div>
-      </a>
       <a class="tile" href="https://www.irs.gov/payments/your-online-account" target="_blank" rel="noopener" data-tags="irs taxes federal account">
         <div class="tile-top"><span class="tile-emoji">🏛️</span></div>
         <div class="tile-name">IRS Account</div>
         <div class="tile-desc">Federal tax account & payments</div>
       </a>
-      <a class="tile" href="https://www.eftps.gov/eftps/" target="_blank" rel="noopener" data-tags="eftps tax payments federal">
+      <a class="tile" href="https://www.eftps.gov/eftps/" target="_blank" rel="noopener" data-tags="eftps tax payments federal electronic">
         <div class="tile-top"><span class="tile-emoji">💳</span></div>
         <div class="tile-name">EFTPS</div>
-        <div class="tile-desc">Federal tax deposit system</div>
+        <div class="tile-desc">Electronic Federal Tax Payment System</div>
       </a>
     </div>
   </div>
 
-  <!-- SECTION: UNEMPLOYMENT & BENEFITS -->
+  <!-- BENEFITS & UI -->
   <div class="section" data-section>
     <div class="section-header">
       <span class="section-icon">📋</span>
       <span class="section-title">Benefits & UI</span>
     </div>
     <div class="grid">
-      <a class="tile" href="https://myui.coworkforce.com/" target="_blank" rel="noopener" data-tags="unemployment UI certify colorado">
+      <a class="tile" href="https://www.colorado.gov/unemployment" target="_blank" rel="noopener" data-tags="unemployment UI certify colorado">
         <div class="tile-top"><span class="tile-emoji">📝</span><span class="tile-badge badge-pending">Certify</span></div>
         <div class="tile-name">Colorado UI</div>
-        <div class="tile-desc">Weekly certification · Window open now</div>
+        <div class="tile-desc">Weekly certification · State unemployment</div>
       </a>
       <a class="tile" href="https://www.va.gov" target="_blank" rel="noopener" data-tags="VA veterans affairs benefits">
         <div class="tile-top"><span class="tile-emoji">🎖️</span><span class="tile-badge badge-active">Filed</span></div>
         <div class="tile-name">VA.gov</div>
         <div class="tile-desc">Benefits, healthcare, Intent to File</div>
-      </a>
-      <a class="tile" href="https://www.myhealth.va.gov" target="_blank" rel="noopener" data-tags="VA health my healthevet">
-        <div class="tile-top"><span class="tile-emoji">🏥</span></div>
-        <div class="tile-name">My HealtheVet</div>
-        <div class="tile-desc">VA healthcare portal · Boulder clinic</div>
-      </a>
-      <a class="tile" href="https://www.ebenefits.va.gov" target="_blank" rel="noopener" data-tags="ebenefits VA disability claim">
-        <div class="tile-top"><span class="tile-emoji">🛡️</span></div>
-        <div class="tile-name">eBenefits</div>
-        <div class="tile-desc">Disability claims & status</div>
-      </a>
-      <a class="tile" href="https://mycoloradojourney.com" target="_blank" rel="noopener" data-tags="colorado training workforce development">
-        <div class="tile-top"><span class="tile-emoji">🗺️</span></div>
-        <div class="tile-name">My CO Journey</div>
-        <div class="tile-desc">Free training & career resources</div>
       </a>
       <a class="tile" href="https://connectingcolorado.com" target="_blank" rel="noopener" data-tags="connecting colorado jobs workforce">
         <div class="tile-top"><span class="tile-emoji">🔗</span></div>
@@ -551,7 +387,37 @@
     </div>
   </div>
 
-  <!-- SECTION: BUSINESS & LEGAL -->
+  <!-- MILITARY -->
+  <div class="section" data-section>
+    <div class="section-header">
+      <span class="section-icon">⚓</span>
+      <span class="section-title">Military</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://militaryonesource.mil" target="_blank" rel="noopener" data-tags="military one source records veteran">
+        <div class="tile-top"><span class="tile-emoji">⚓</span></div>
+        <div class="tile-name">Military OneSource</div>
+        <div class="tile-desc">Military records & resources</div>
+      </a>
+      <a class="tile" href="https://www.archives.gov/veterans/military-service-records" target="_blank" rel="noopener" data-tags="military records NARA archives service NPRC">
+        <div class="tile-top"><span class="tile-emoji">📜</span></div>
+        <div class="tile-name">NPRC Records</div>
+        <div class="tile-desc">Military service records · C-0007596722</div>
+      </a>
+      <a class="tile" href="https://www.va.gov" target="_blank" rel="noopener" data-tags="VA veterans affairs disability benefits">
+        <div class="tile-top"><span class="tile-emoji">🛡️</span></div>
+        <div class="tile-name">VA Benefits</div>
+        <div class="tile-desc">Disability & benefits portal</div>
+      </a>
+      <a class="tile" href="https://www.vetbiz.gov" target="_blank" rel="noopener" data-tags="veteran owned VOSB certification contracts">
+        <div class="tile-top"><span class="tile-emoji">⭐</span></div>
+        <div class="tile-name">VetBiz / CVE</div>
+        <div class="tile-desc">Veteran-owned biz certification (VOSB)</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- BUSINESS & LEGAL -->
   <div class="section" data-section>
     <div class="section-header">
       <span class="section-icon">⚖️</span>
@@ -568,7 +434,7 @@
         <div class="tile-name">EIN Reference</div>
         <div class="tile-desc">IRS employer identification number</div>
       </a>
-      <a class="tile" href="https://www.colorado.gov/pacific/tax/business" target="_blank" rel="noopener" data-tags="colorado taxes department revenue business">
+      <a class="tile" href="https://www.colorado.gov/tax" target="_blank" rel="noopener" data-tags="colorado taxes department revenue business">
         <div class="tile-top"><span class="tile-emoji">📑</span></div>
         <div class="tile-name">CO Dept of Revenue</div>
         <div class="tile-desc">State taxes & business filings</div>
@@ -578,20 +444,10 @@
         <div class="tile-name">SAM.gov</div>
         <div class="tile-desc">Federal contractor registration</div>
       </a>
-      <a class="tile" href="https://militaryonesource.mil" target="_blank" rel="noopener" data-tags="military one source records veteran">
-        <div class="tile-top"><span class="tile-emoji">⚓</span></div>
-        <div class="tile-name">Military OneSource</div>
-        <div class="tile-desc">Military records & resources</div>
-      </a>
-      <a class="tile" href="https://www.archives.gov/veterans/military-service-records" target="_blank" rel="noopener" data-tags="military records NARA archives service">
-        <div class="tile-top"><span class="tile-emoji">📜</span></div>
-        <div class="tile-name">NPRC Records</div>
-        <div class="tile-desc">Military records · C-0007596722</div>
-      </a>
     </div>
   </div>
 
-  <!-- SECTION: TASK & PROJECT MANAGEMENT -->
+  <!-- TASKS & PROJECTS -->
   <div class="section" data-section>
     <div class="section-header">
       <span class="section-icon">✅</span>
@@ -631,52 +487,7 @@
     </div>
   </div>
 
-  <!-- SECTION: JOB SEARCH -->
-  <div class="section" data-section>
-    <div class="section-header">
-      <span class="section-icon">💼</span>
-      <span class="section-title">Job Search</span>
-    </div>
-    <div class="grid">
-      <a class="tile" href="https://www.linkedin.com/jobs" target="_blank" rel="noopener" data-tags="linkedin jobs career network">
-        <div class="tile-top"><span class="tile-emoji">🔵</span></div>
-        <div class="tile-name">LinkedIn</div>
-        <div class="tile-desc">Job search & professional network</div>
-      </a>
-      <a class="tile" href="https://www.usajobs.gov" target="_blank" rel="noopener" data-tags="usajobs federal government GS jobs">
-        <div class="tile-top"><span class="tile-emoji">🏛️</span></div>
-        <div class="tile-name">USAJobs</div>
-        <div class="tile-desc">Federal jobs · GS-1700, DoDEA tracks</div>
-      </a>
-      <a class="tile" href="https://www.indeed.com" target="_blank" rel="noopener" data-tags="indeed jobs employment search">
-        <div class="tile-top"><span class="tile-emoji">🔍</span></div>
-        <div class="tile-name">Indeed</div>
-        <div class="tile-desc">General job search</div>
-      </a>
-      <a class="tile" href="https://www.edjoin.org" target="_blank" rel="noopener" data-tags="edjoin teaching education CTE jobs colorado">
-        <div class="tile-top"><span class="tile-emoji">🎓</span></div>
-        <div class="tile-name">EdJoin</div>
-        <div class="tile-desc">CTE & education positions</div>
-      </a>
-      <a class="tile" href="https://veteranscommunityproject.org" target="_blank" rel="noopener" data-tags="veterans community project VCP Longmont job">
-        <div class="tile-top"><span class="tile-emoji">🎖️</span><span class="tile-badge badge-new">Lead</span></div>
-        <div class="tile-name">Veterans Community</div>
-        <div class="tile-desc">VCP Longmont — active lead</div>
-      </a>
-      <a class="tile" href="https://www.dodea.edu/Offices/HR/employment.cfm" target="_blank" rel="noopener" data-tags="DoDEA military education overseas federal">
-        <div class="tile-top"><span class="tile-emoji">🌐</span></div>
-        <div class="tile-name">DoDEA</div>
-        <div class="tile-desc">Dept of Defense Education Activity</div>
-      </a>
-      <a class="tile" href="https://owlapply.com" target="_blank" rel="noopener" data-tags="owlapply AI resume ATS cover letter autofill job application tracker">
-        <div class="tile-top"><span class="tile-emoji">🦉</span><span class="tile-badge badge-new">AI</span></div>
-        <div class="tile-name">OwlApply</div>
-        <div class="tile-desc">AI resume builder, ATS checker, autofill & application tracker</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- SECTION: BUSINESS DEVELOPMENT -->
+  <!-- BUSINESS DEVELOPMENT -->
   <div class="section" data-section>
     <div class="section-header">
       <span class="section-icon">🚀</span>
@@ -718,17 +529,10 @@
           <div class="tile-desc">I-70 staging area concept contacts</div>
         </div>
       </a>
-      <a class="tile tile-wide" href="https://www.vetbiz.gov" target="_blank" rel="noopener" data-tags="veteran owned VOSB certification contracts">
-        <span class="tile-emoji">⭐</span>
-        <div class="tile-wide-body">
-          <div class="tile-name">VetBiz / CVE</div>
-          <div class="tile-desc">Veteran-owned biz certification (VOSB)</div>
-        </div>
-      </a>
     </div>
   </div>
 
-  <!-- SECTION: TOOLS & PLATFORMS -->
+  <!-- TOOLS & PLATFORMS -->
   <div class="section" data-section>
     <div class="section-header">
       <span class="section-icon">🛠️</span>
@@ -768,27 +572,17 @@
     </div>
   </div>
 
-  <!-- SECTION: HEALTH & WELLNESS -->
+  <!-- HEALTH & WELLNESS -->
   <div class="section" data-section>
     <div class="section-header">
       <span class="section-icon">💪</span>
       <span class="section-title">Health & Wellness</span>
     </div>
     <div class="grid">
-      <a class="tile" href="https://www.myhealth.va.gov/mhv-portal-web/secure-messaging" target="_blank" rel="noopener" data-tags="VA health secure messaging doctor">
-        <div class="tile-top"><span class="tile-emoji">💬</span><span class="tile-badge badge-pending">Schedule</span></div>
-        <div class="tile-name">VA Secure Messaging</div>
-        <div class="tile-desc">Message care team · schedule shoulder imaging</div>
-      </a>
       <a class="tile" href="https://www.va.gov/health-care/schedule-view-va-appointments/" target="_blank" rel="noopener" data-tags="VA appointments schedule imaging shoulder">
         <div class="tile-top"><span class="tile-emoji">📅</span><span class="tile-badge badge-pending">Needed</span></div>
         <div class="tile-name">VA Appointments</div>
         <div class="tile-desc">Shoulder/collarbone/hand imaging pending</div>
-      </a>
-      <a class="tile" href="https://www.nike.com/us/en/nrc-app" target="_blank" rel="noopener" data-tags="running trail training fitness tracker">
-        <div class="tile-top"><span class="tile-emoji">🏃</span></div>
-        <div class="tile-name">Run Tracker</div>
-        <div class="tile-desc">Trail runs · Speedcross 6 season</div>
       </a>
       <a class="tile" href="https://www.strava.com" target="_blank" rel="noopener" data-tags="strava fitness training activities">
         <div class="tile-top"><span class="tile-emoji">🗻</span></div>
@@ -798,14 +592,13 @@
     </div>
   </div>
 
-</div><!-- end .main -->
+</div>
 
 <div class="footer">
   McVent LLC · Lafayette, CO · CO SOS 20261635761 · EIN on file · Veteran-Owned
 </div>
 
 <script>
-  // Live clock
   function updateTime() {
     const now = new Date();
     document.getElementById('live-time').textContent =
@@ -816,13 +609,6 @@
   setInterval(updateTime, 1000);
   updateTime();
 
-  // Days since quitting
-  const quitDate = new Date('2026-05-24');
-  const today = new Date();
-  const days = Math.floor((today - quitDate) / (1000 * 60 * 60 * 24));
-  document.getElementById('quit-days').textContent = days + ' days';
-
-  // Search / filter
   document.getElementById('search').addEventListener('input', function() {
     const q = this.value.toLowerCase().trim();
     document.querySelectorAll('.tile').forEach(tile => {
