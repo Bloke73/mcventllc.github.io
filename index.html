@@ -45,11 +45,7 @@
     z-index: 100;
   }
 
-  .topbar-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
 
   .logo-mark {
     font-family: 'JetBrains Mono', monospace;
@@ -68,11 +64,7 @@
     padding-left: 16px;
   }
 
-  .topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
+  .topbar-right { display: flex; align-items: center; gap: 20px; }
 
   .status-pill {
     display: flex;
@@ -84,8 +76,7 @@
   }
 
   .dot {
-    width: 6px;
-    height: 6px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--green);
     animation: pulse 2.5s ease-in-out infinite;
@@ -108,9 +99,7 @@
     padding: 28px 24px 60px;
   }
 
-  .page-header {
-    margin-bottom: 32px;
-  }
+  .page-header { margin-bottom: 32px; }
 
   .page-title {
     font-size: 13px;
@@ -128,9 +117,7 @@
     letter-spacing: -0.02em;
   }
 
-  .section {
-    margin-bottom: 36px;
-  }
+  .section { margin-bottom: 36px; }
 
   .section-header {
     display: flex;
@@ -201,10 +188,7 @@
     justify-content: space-between;
   }
 
-  .tile-emoji {
-    font-size: 22px;
-    line-height: 1;
-  }
+  .tile-emoji { font-size: 22px; line-height: 1; }
 
   .tile-badge {
     font-family: 'JetBrains Mono', monospace;
@@ -454,10 +438,10 @@
       <span class="section-title">Tasks & Projects</span>
     </div>
     <div class="grid">
-      <a class="tile" href="https://todoist.com" target="_blank" rel="noopener" data-tags="todoist tasks projects todo management">
-        <div class="tile-top"><span class="tile-emoji">📌</span><span class="tile-badge badge-active">Active</span></div>
-        <div class="tile-name">Todoist</div>
-        <div class="tile-desc">McVent projects & daily tasks</div>
+      <a class="tile" href="https://tasks.google.com" target="_blank" rel="noopener" data-tags="google tasks todo list management reminders">
+        <div class="tile-top"><span class="tile-emoji">✅</span><span class="tile-badge badge-active">Active</span></div>
+        <div class="tile-name">Google Tasks</div>
+        <div class="tile-desc">Task lists & reminders</div>
       </a>
       <a class="tile" href="https://drive.google.com" target="_blank" rel="noopener" data-tags="google drive docs files storage">
         <div class="tile-top"><span class="tile-emoji">📁</span></div>
@@ -508,25 +492,11 @@
           <div class="tile-desc">Free business mentorship & consulting</div>
         </div>
       </a>
-      <a class="tile tile-wide" href="https://www.lafayetteco.gov/business" target="_blank" rel="noopener" data-tags="lafayette city business permits local">
-        <span class="tile-emoji">📍</span>
-        <div class="tile-wide-body">
-          <div class="tile-name">City of Lafayette</div>
-          <div class="tile-desc">Local business permits & city resources</div>
-        </div>
-      </a>
       <a class="tile tile-wide" href="https://www.bouldersmallbiz.com" target="_blank" rel="noopener" data-tags="boulder SBDC small business development center">
         <span class="tile-emoji">💡</span>
         <div class="tile-wide-body">
           <div class="tile-name">Boulder SBDC</div>
           <div class="tile-desc">Small Business Development Center</div>
-        </div>
-      </a>
-      <a class="tile tile-wide" href="https://cdot.colorado.gov" target="_blank" rel="noopener" data-tags="CDOT I-70 corridor transportation colorado">
-        <span class="tile-emoji">🛣️</span>
-        <div class="tile-wide-body">
-          <div class="tile-name">CDOT</div>
-          <div class="tile-desc">I-70 staging area concept contacts</div>
         </div>
       </a>
     </div>
@@ -554,40 +524,10 @@
         <div class="tile-name">YouTube Studio</div>
         <div class="tile-desc">Lafayette/Louisville content channel</div>
       </a>
-      <a class="tile" href="https://www.linkedin.com" target="_blank" rel="noopener" data-tags="linkedin social professional network">
-        <div class="tile-top"><span class="tile-emoji">💼</span></div>
-        <div class="tile-name">LinkedIn</div>
-        <div class="tile-desc">Professional network & presence</div>
-      </a>
       <a class="tile" href="https://mileiq.com" target="_blank" rel="noopener" data-tags="mileiq mileage tracking deduction business">
         <div class="tile-top"><span class="tile-emoji">🚗</span></div>
         <div class="tile-name">MileIQ</div>
         <div class="tile-desc">Mileage tracking for deductions</div>
-      </a>
-      <a class="tile" href="https://workspace.google.com" target="_blank" rel="noopener" data-tags="google workspace admin email business">
-        <div class="tile-top"><span class="tile-emoji">⚙️</span></div>
-        <div class="tile-name">Google Workspace</div>
-        <div class="tile-desc">Admin & tools management</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- HEALTH & WELLNESS -->
-  <div class="section" data-section>
-    <div class="section-header">
-      <span class="section-icon">💪</span>
-      <span class="section-title">Health & Wellness</span>
-    </div>
-    <div class="grid">
-      <a class="tile" href="https://www.va.gov/health-care/schedule-view-va-appointments/" target="_blank" rel="noopener" data-tags="VA appointments schedule imaging shoulder">
-        <div class="tile-top"><span class="tile-emoji">📅</span><span class="tile-badge badge-pending">Needed</span></div>
-        <div class="tile-name">VA Appointments</div>
-        <div class="tile-desc">Shoulder/collarbone/hand imaging pending</div>
-      </a>
-      <a class="tile" href="https://www.strava.com" target="_blank" rel="noopener" data-tags="strava fitness training activities">
-        <div class="tile-top"><span class="tile-emoji">🗻</span></div>
-        <div class="tile-name">Strava</div>
-        <div class="tile-desc">Training & activity tracking</div>
       </a>
     </div>
   </div>
