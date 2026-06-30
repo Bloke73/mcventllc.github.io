@@ -20,7 +20,6 @@
     --bright:  #eaf2fa;
     --green:   #3ecf8e;
     --amber:   #f5a623;
-    --red:     #e05555;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,8 +34,8 @@
   .topbar {
     background: var(--ink);
     border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    height: 52px;
+    padding: 0 20px;
+    height: 46px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -45,32 +44,32 @@
     z-index: 100;
   }
 
-  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-left { display: flex; align-items: center; gap: 14px; }
 
   .logo-mark {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--gold);
     letter-spacing: 0.08em;
   }
 
   .logo-sub {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--muted);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     border-left: 1px solid var(--border);
-    padding-left: 16px;
+    padding-left: 14px;
   }
 
-  .topbar-right { display: flex; align-items: center; gap: 20px; }
+  .topbar-right { display: flex; align-items: center; gap: 16px; }
 
   .status-pill {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 11px;
+    font-size: 10px;
     font-family: 'JetBrains Mono', monospace;
     color: var(--muted);
   }
@@ -82,56 +81,107 @@
     animation: pulse 2.5s ease-in-out infinite;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
   .date-display {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--muted);
   }
 
-  .main {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 28px 24px 60px;
+  /* JUMP NAV - horizontal category bar so everything is reachable without scroll */
+  .jumpnav {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 20px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 46px;
+    z-index: 99;
   }
 
-  .page-header { margin-bottom: 32px; }
+  .jumpnav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+    transition: all 0.12s;
+  }
+
+  .jumpnav a:hover {
+    color: var(--gold2);
+    border-color: rgba(201,168,76,0.4);
+    background: var(--card);
+  }
+
+  .main {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 18px 20px 50px;
+  }
+
+  .page-header { margin-bottom: 18px; }
 
   .page-title {
-    font-size: 13px;
+    font-size: 12px;
     font-family: 'JetBrains Mono', monospace;
     color: var(--gold);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .page-sub {
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 600;
     color: var(--bright);
     letter-spacing: -0.02em;
   }
 
-  .section { margin-bottom: 36px; }
+  .search-wrap { margin-bottom: 20px; }
+
+  .search-input {
+    width: 100%;
+    max-width: 380px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px 8px 34px;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.15s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234a6580' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 10px center;
+  }
+
+  .search-input:focus { border-color: rgba(201,168,76,0.4); }
+  .search-input::placeholder { color: var(--muted); }
+
+  .section { margin-bottom: 22px; }
 
   .section-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
     border-bottom: 1px solid var(--border);
+    scroll-margin-top: 100px;
   }
 
-  .section-icon { font-size: 14px; }
+  .section-icon { font-size: 12px; }
 
   .section-title {
-    font-size: 11px;
+    font-size: 10px;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 600;
     color: var(--muted);
@@ -139,148 +189,96 @@
     text-transform: uppercase;
   }
 
+  /* COMPACT HORIZONTAL GRID - smaller tiles, more per row, less scroll */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 10px;
-  }
-
-  .grid-wide {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 6px;
   }
 
   .tile {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
+    border-radius: 6px;
+    padding: 9px 10px;
     cursor: pointer;
     text-decoration: none;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: border-color 0.15s, background 0.15s, transform 0.12s;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.12s, background 0.12s;
     position: relative;
-    overflow: hidden;
-  }
-
-  .tile::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--gold);
-    opacity: 0;
-    transition: opacity 0.15s;
+    min-height: 44px;
   }
 
   .tile:hover {
     border-color: rgba(201,168,76,0.4);
     background: #213047;
-    transform: translateY(-2px);
   }
 
-  .tile:hover::before { opacity: 1; }
+  .tile-emoji {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
 
-  .tile-top {
+  .tile-body {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-
-  .tile-emoji { font-size: 22px; line-height: 1; }
-
-  .tile-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    padding: 2px 6px;
-    border-radius: 3px;
-    text-transform: uppercase;
-  }
-
-  .badge-active {
-    background: rgba(62,207,142,0.12);
-    color: var(--green);
-    border: 1px solid rgba(62,207,142,0.25);
-  }
-
-  .badge-pending {
-    background: rgba(245,166,35,0.12);
-    color: var(--amber);
-    border: 1px solid rgba(245,166,35,0.25);
-  }
-
-  .badge-new {
-    background: rgba(201,168,76,0.12);
-    color: var(--gold2);
-    border: 1px solid rgba(201,168,76,0.3);
+    flex-direction: column;
+    gap: 1px;
+    overflow: hidden;
   }
 
   .tile-name {
-    font-size: 14px;
+    font-size: 11.5px;
     font-weight: 600;
     color: var(--bright);
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .tile-desc {
-    font-size: 11px;
+    font-size: 9px;
     color: var(--muted);
-    line-height: 1.4;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .tile-wide {
-    flex-direction: row;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
+  .tile-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: absolute;
+    top: 7px;
+    right: 7px;
   }
 
-  .tile-wide .tile-emoji { font-size: 26px; }
-  .tile-wide-body { flex: 1; }
-  .tile-wide .tile-name { font-size: 13px; }
-  .tile-wide .tile-desc { font-size: 11px; margin-top: 2px; }
-
-  .search-wrap { margin-bottom: 28px; }
-
-  .search-input {
-    width: 100%;
-    max-width: 420px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 14px 10px 38px;
-    color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.15s;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234a6580' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: 12px center;
-  }
-
-  .search-input:focus { border-color: rgba(201,168,76,0.4); }
-  .search-input::placeholder { color: var(--muted); }
+  .dot-active { background: var(--green); }
+  .dot-pending { background: var(--amber); }
+  .dot-new { background: var(--gold2); }
 
   .footer {
     border-top: 1px solid var(--border);
-    padding: 20px 24px;
+    padding: 16px 20px;
     text-align: center;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 9px;
     color: var(--muted);
     letter-spacing: 0.06em;
   }
 
   @media (max-width: 640px) {
-    .topbar { padding: 0 14px; }
+    .topbar { padding: 0 12px; }
     .logo-sub { display: none; }
-    .main { padding: 20px 14px 40px; }
-    .page-sub { font-size: 22px; }
-    .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .jumpnav { padding: 6px 12px; top: 42px; }
+    .main { padding: 14px 12px 36px; }
+    .page-sub { font-size: 18px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); }
   }
 </style>
 </head>
@@ -300,6 +298,19 @@
   </div>
 </div>
 
+<!-- HORIZONTAL JUMP NAV -->
+<div class="jumpnav">
+  <a href="#finance">💰 Finance</a>
+  <a href="#benefits">📋 Benefits</a>
+  <a href="#military">⚓ Military</a>
+  <a href="#legal">⚖️ Legal</a>
+  <a href="#tasks">✅ Tasks</a>
+  <a href="#bizdev">🚀 Biz Dev</a>
+  <a href="#tools">🛠️ Tools</a>
+  <a href="#fitness">💪 Fitness</a>
+  <a href="#summer">🏔️ Summer Training</a>
+</div>
+
 <div class="main">
 
   <div class="page-header">
@@ -312,222 +323,275 @@
   </div>
 
   <!-- FINANCE & BANKING -->
-  <div class="section" data-section>
+  <div class="section" data-section id="finance">
     <div class="section-header">
       <span class="section-icon">💰</span>
       <span class="section-title">Finance & Banking</span>
     </div>
     <div class="grid">
       <a class="tile" href="https://app.relayfi.com" target="_blank" rel="noopener" data-tags="relay banking checking business">
-        <div class="tile-top"><span class="tile-emoji">🏦</span><span class="tile-badge badge-active">Active</span></div>
-        <div class="tile-name">Relay Banking</div>
-        <div class="tile-desc">McVent business checking & accounts</div>
+        <span class="tile-emoji">🏦</span>
+        <div class="tile-body"><div class="tile-name">Relay</div><div class="tile-desc">Banking</div></div>
+        <span class="tile-badge-dot dot-active"></span>
       </a>
       <a class="tile" href="https://books.zoho.com" target="_blank" rel="noopener" data-tags="zoho books accounting expenses">
-        <div class="tile-top"><span class="tile-emoji">📒</span><span class="tile-badge badge-active">Active</span></div>
-        <div class="tile-name">Zoho Books</div>
-        <div class="tile-desc">Accounting, invoices, expense tracking</div>
+        <span class="tile-emoji">📒</span>
+        <div class="tile-body"><div class="tile-name">Zoho Books</div><div class="tile-desc">Accounting</div></div>
+        <span class="tile-badge-dot dot-active"></span>
       </a>
       <a class="tile" href="https://www.fidelity.com/login" target="_blank" rel="noopener" data-tags="fidelity 401k retirement solo">
-        <div class="tile-top"><span class="tile-emoji">📈</span><span class="tile-badge badge-active">Active</span></div>
-        <div class="tile-name">Fidelity 401(k)</div>
-        <div class="tile-desc">Solo 401(k) · Acct 266530043</div>
+        <span class="tile-emoji">📈</span>
+        <div class="tile-body"><div class="tile-name">Fidelity</div><div class="tile-desc">Solo 401k</div></div>
+        <span class="tile-badge-dot dot-active"></span>
       </a>
       <a class="tile" href="https://www.irs.gov/payments/your-online-account" target="_blank" rel="noopener" data-tags="irs taxes federal account">
-        <div class="tile-top"><span class="tile-emoji">🏛️</span></div>
-        <div class="tile-name">IRS Account</div>
-        <div class="tile-desc">Federal tax account & payments</div>
+        <span class="tile-emoji">🏛️</span>
+        <div class="tile-body"><div class="tile-name">IRS Account</div><div class="tile-desc">Tax & payments</div></div>
       </a>
       <a class="tile" href="https://www.eftps.gov/eftps/" target="_blank" rel="noopener" data-tags="eftps tax payments federal electronic">
-        <div class="tile-top"><span class="tile-emoji">💳</span></div>
-        <div class="tile-name">EFTPS</div>
-        <div class="tile-desc">Electronic Federal Tax Payment System</div>
+        <span class="tile-emoji">💳</span>
+        <div class="tile-body"><div class="tile-name">EFTPS</div><div class="tile-desc">Fed tax deposit</div></div>
       </a>
     </div>
   </div>
 
   <!-- BENEFITS & UI -->
-  <div class="section" data-section>
+  <div class="section" data-section id="benefits">
     <div class="section-header">
       <span class="section-icon">📋</span>
       <span class="section-title">Benefits & UI</span>
     </div>
     <div class="grid">
       <a class="tile" href="https://www.colorado.gov/unemployment" target="_blank" rel="noopener" data-tags="unemployment UI certify colorado">
-        <div class="tile-top"><span class="tile-emoji">📝</span><span class="tile-badge badge-pending">Certify</span></div>
-        <div class="tile-name">Colorado UI</div>
-        <div class="tile-desc">Weekly certification · State unemployment</div>
+        <span class="tile-emoji">📝</span>
+        <div class="tile-body"><div class="tile-name">Colorado UI</div><div class="tile-desc">Certify weekly</div></div>
+        <span class="tile-badge-dot dot-pending"></span>
       </a>
       <a class="tile" href="https://www.va.gov" target="_blank" rel="noopener" data-tags="VA veterans affairs benefits">
-        <div class="tile-top"><span class="tile-emoji">🎖️</span><span class="tile-badge badge-active">Filed</span></div>
-        <div class="tile-name">VA.gov</div>
-        <div class="tile-desc">Benefits, healthcare, Intent to File</div>
+        <span class="tile-emoji">🎖️</span>
+        <div class="tile-body"><div class="tile-name">VA.gov</div><div class="tile-desc">Benefits portal</div></div>
+        <span class="tile-badge-dot dot-active"></span>
       </a>
       <a class="tile" href="https://connectingcolorado.com" target="_blank" rel="noopener" data-tags="connecting colorado jobs workforce">
-        <div class="tile-top"><span class="tile-emoji">🔗</span></div>
-        <div class="tile-name">Connecting CO</div>
-        <div class="tile-desc">Workforce center job board</div>
+        <span class="tile-emoji">🔗</span>
+        <div class="tile-body"><div class="tile-name">Connecting CO</div><div class="tile-desc">Workforce</div></div>
       </a>
     </div>
   </div>
 
   <!-- MILITARY -->
-  <div class="section" data-section>
+  <div class="section" data-section id="military">
     <div class="section-header">
       <span class="section-icon">⚓</span>
       <span class="section-title">Military</span>
     </div>
     <div class="grid">
       <a class="tile" href="https://militaryonesource.mil" target="_blank" rel="noopener" data-tags="military one source records veteran">
-        <div class="tile-top"><span class="tile-emoji">⚓</span></div>
-        <div class="tile-name">Military OneSource</div>
-        <div class="tile-desc">Military records & resources</div>
+        <span class="tile-emoji">⚓</span>
+        <div class="tile-body"><div class="tile-name">OneSource</div><div class="tile-desc">Resources</div></div>
       </a>
       <a class="tile" href="https://www.archives.gov/veterans/military-service-records" target="_blank" rel="noopener" data-tags="military records NARA archives service NPRC">
-        <div class="tile-top"><span class="tile-emoji">📜</span></div>
-        <div class="tile-name">NPRC Records</div>
-        <div class="tile-desc">Military service records · C-0007596722</div>
+        <span class="tile-emoji">📜</span>
+        <div class="tile-body"><div class="tile-name">NPRC Records</div><div class="tile-desc">Service records</div></div>
       </a>
       <a class="tile" href="https://www.va.gov" target="_blank" rel="noopener" data-tags="VA veterans affairs disability benefits">
-        <div class="tile-top"><span class="tile-emoji">🛡️</span></div>
-        <div class="tile-name">VA Benefits</div>
-        <div class="tile-desc">Disability & benefits portal</div>
+        <span class="tile-emoji">🛡️</span>
+        <div class="tile-body"><div class="tile-name">VA Benefits</div><div class="tile-desc">Disability</div></div>
       </a>
       <a class="tile" href="https://www.vetbiz.gov" target="_blank" rel="noopener" data-tags="veteran owned VOSB certification contracts">
-        <div class="tile-top"><span class="tile-emoji">⭐</span></div>
-        <div class="tile-name">VetBiz / CVE</div>
-        <div class="tile-desc">Veteran-owned biz certification (VOSB)</div>
+        <span class="tile-emoji">⭐</span>
+        <div class="tile-body"><div class="tile-name">VetBiz/CVE</div><div class="tile-desc">VOSB cert</div></div>
       </a>
     </div>
   </div>
 
   <!-- BUSINESS & LEGAL -->
-  <div class="section" data-section>
+  <div class="section" data-section id="legal">
     <div class="section-header">
       <span class="section-icon">⚖️</span>
       <span class="section-title">Business & Legal</span>
     </div>
     <div class="grid">
       <a class="tile" href="https://www.sos.state.co.us/biz/BusinessEntityCriteriaExt.do" target="_blank" rel="noopener" data-tags="SOS colorado secretary state mcvent LLC filing">
-        <div class="tile-top"><span class="tile-emoji">🏢</span><span class="tile-badge badge-active">Active</span></div>
-        <div class="tile-name">Colorado SOS</div>
-        <div class="tile-desc">McVent LLC filing · ID 20261635761</div>
+        <span class="tile-emoji">🏢</span>
+        <div class="tile-body"><div class="tile-name">CO SOS</div><div class="tile-desc">LLC filing</div></div>
+        <span class="tile-badge-dot dot-active"></span>
       </a>
       <a class="tile" href="https://www.irs.gov/businesses/small-businesses-self-employed/employer-id-numbers" target="_blank" rel="noopener" data-tags="EIN employer ID number IRS tax">
-        <div class="tile-top"><span class="tile-emoji">🔢</span></div>
-        <div class="tile-name">EIN Reference</div>
-        <div class="tile-desc">IRS employer identification number</div>
+        <span class="tile-emoji">🔢</span>
+        <div class="tile-body"><div class="tile-name">EIN Ref</div><div class="tile-desc">Tax ID</div></div>
       </a>
       <a class="tile" href="https://www.colorado.gov/tax" target="_blank" rel="noopener" data-tags="colorado taxes department revenue business">
-        <div class="tile-top"><span class="tile-emoji">📑</span></div>
-        <div class="tile-name">CO Dept of Revenue</div>
-        <div class="tile-desc">State taxes & business filings</div>
+        <span class="tile-emoji">📑</span>
+        <div class="tile-body"><div class="tile-name">CO Revenue</div><div class="tile-desc">State taxes</div></div>
       </a>
       <a class="tile" href="https://sam.gov" target="_blank" rel="noopener" data-tags="SAM federal contractor registration government">
-        <div class="tile-top"><span class="tile-emoji">🇺🇸</span></div>
-        <div class="tile-name">SAM.gov</div>
-        <div class="tile-desc">Federal contractor registration</div>
+        <span class="tile-emoji">🇺🇸</span>
+        <div class="tile-body"><div class="tile-name">SAM.gov</div><div class="tile-desc">Fed contractor</div></div>
       </a>
     </div>
   </div>
 
   <!-- TASKS & PROJECTS -->
-  <div class="section" data-section>
+  <div class="section" data-section id="tasks">
     <div class="section-header">
       <span class="section-icon">✅</span>
       <span class="section-title">Tasks & Projects</span>
     </div>
     <div class="grid">
       <a class="tile" href="https://tasks.google.com" target="_blank" rel="noopener" data-tags="google tasks todo list management reminders">
-        <div class="tile-top"><span class="tile-emoji">✅</span><span class="tile-badge badge-active">Active</span></div>
-        <div class="tile-name">Google Tasks</div>
-        <div class="tile-desc">Task lists & reminders</div>
+        <span class="tile-emoji">✅</span>
+        <div class="tile-body"><div class="tile-name">Google Tasks</div><div class="tile-desc">Task lists</div></div>
+        <span class="tile-badge-dot dot-active"></span>
       </a>
       <a class="tile" href="https://drive.google.com" target="_blank" rel="noopener" data-tags="google drive docs files storage">
-        <div class="tile-top"><span class="tile-emoji">📁</span></div>
-        <div class="tile-name">Google Drive</div>
-        <div class="tile-desc">Files, docs, shared storage</div>
+        <span class="tile-emoji">📁</span>
+        <div class="tile-body"><div class="tile-name">Drive</div><div class="tile-desc">Files</div></div>
       </a>
       <a class="tile" href="https://docs.google.com" target="_blank" rel="noopener" data-tags="google docs documents writing">
-        <div class="tile-top"><span class="tile-emoji">📄</span></div>
-        <div class="tile-name">Google Docs</div>
-        <div class="tile-desc">Documents & writing</div>
+        <span class="tile-emoji">📄</span>
+        <div class="tile-body"><div class="tile-name">Docs</div><div class="tile-desc">Writing</div></div>
       </a>
       <a class="tile" href="https://calendar.google.com" target="_blank" rel="noopener" data-tags="google calendar schedule appointments">
-        <div class="tile-top"><span class="tile-emoji">🗓️</span></div>
-        <div class="tile-name">Google Calendar</div>
-        <div class="tile-desc">Scheduling & appointments</div>
+        <span class="tile-emoji">🗓️</span>
+        <div class="tile-body"><div class="tile-name">Calendar</div><div class="tile-desc">Schedule</div></div>
       </a>
       <a class="tile" href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener" data-tags="gmail personal email jmcmillin">
-        <div class="tile-top"><span class="tile-emoji">✉️</span></div>
-        <div class="tile-name">Gmail · Personal</div>
-        <div class="tile-desc">jmcmillin5973@gmail.com</div>
+        <span class="tile-emoji">✉️</span>
+        <div class="tile-body"><div class="tile-name">Gmail Personal</div><div class="tile-desc">jmcmillin5973</div></div>
       </a>
       <a class="tile" href="https://mail.google.com/mail/u/1/#inbox" target="_blank" rel="noopener" data-tags="gmail mcvent business email">
-        <div class="tile-top"><span class="tile-emoji">📧</span><span class="tile-badge badge-new">Biz</span></div>
-        <div class="tile-name">Gmail · McVent</div>
-        <div class="tile-desc">mcventllc@gmail.com</div>
+        <span class="tile-emoji">📧</span>
+        <div class="tile-body"><div class="tile-name">Gmail McVent</div><div class="tile-desc">Business</div></div>
+        <span class="tile-badge-dot dot-new"></span>
       </a>
     </div>
   </div>
 
   <!-- BUSINESS DEVELOPMENT -->
-  <div class="section" data-section>
+  <div class="section" data-section id="bizdev">
     <div class="section-header">
       <span class="section-icon">🚀</span>
       <span class="section-title">Business Development</span>
     </div>
-    <div class="grid grid-wide">
-      <a class="tile tile-wide" href="https://www.sba.gov" target="_blank" rel="noopener" data-tags="SBA small business administration grants loans">
+    <div class="grid">
+      <a class="tile" href="https://www.sba.gov" target="_blank" rel="noopener" data-tags="SBA small business administration grants loans">
         <span class="tile-emoji">🏗️</span>
-        <div class="tile-wide-body">
-          <div class="tile-name">SBA</div>
-          <div class="tile-desc">Small Business Administration · loans, grants, resources</div>
-        </div>
+        <div class="tile-body"><div class="tile-name">SBA</div><div class="tile-desc">Loans/grants</div></div>
       </a>
-      <a class="tile tile-wide" href="https://www.score.org" target="_blank" rel="noopener" data-tags="SCORE mentorship business consulting advice">
+      <a class="tile" href="https://www.score.org" target="_blank" rel="noopener" data-tags="SCORE mentorship business consulting advice">
         <span class="tile-emoji">🧭</span>
-        <div class="tile-wide-body">
-          <div class="tile-name">SCORE</div>
-          <div class="tile-desc">Free business mentorship & consulting</div>
-        </div>
+        <div class="tile-body"><div class="tile-name">SCORE</div><div class="tile-desc">Mentorship</div></div>
       </a>
-      <a class="tile tile-wide" href="https://www.bouldersmallbiz.com" target="_blank" rel="noopener" data-tags="boulder SBDC small business development center">
+      <a class="tile" href="https://www.bouldersmallbiz.com" target="_blank" rel="noopener" data-tags="boulder SBDC small business development center">
         <span class="tile-emoji">💡</span>
-        <div class="tile-wide-body">
-          <div class="tile-name">Boulder SBDC</div>
-          <div class="tile-desc">Small Business Development Center</div>
-        </div>
+        <div class="tile-body"><div class="tile-name">Boulder SBDC</div><div class="tile-desc">Dev center</div></div>
       </a>
     </div>
   </div>
 
   <!-- TOOLS & PLATFORMS -->
-  <div class="section" data-section>
+  <div class="section" data-section id="tools">
     <div class="section-header">
       <span class="section-icon">🛠️</span>
       <span class="section-title">Tools & Platforms</span>
     </div>
     <div class="grid">
       <a class="tile" href="https://claude.ai" target="_blank" rel="noopener" data-tags="claude AI anthropic assistant">
-        <div class="tile-top"><span class="tile-emoji">🤖</span><span class="tile-badge badge-active">Primary</span></div>
-        <div class="tile-name">Claude AI</div>
-        <div class="tile-desc">AI assistant · strategy & ops</div>
+        <span class="tile-emoji">🤖</span>
+        <div class="tile-body"><div class="tile-name">Claude AI</div><div class="tile-desc">Strategy/ops</div></div>
+        <span class="tile-badge-dot dot-active"></span>
+      </a>
+      <a class="tile" href="https://console.anthropic.com" target="_blank" rel="noopener" data-tags="anthropic console developer API">
+        <span class="tile-emoji">⚙️</span>
+        <div class="tile-body"><div class="tile-name">Console</div><div class="tile-desc">Dev/API</div></div>
+        <span class="tile-badge-dot dot-new"></span>
       </a>
       <a class="tile" href="https://www.canva.com" target="_blank" rel="noopener" data-tags="canva design graphics marketing">
-        <div class="tile-top"><span class="tile-emoji">🎨</span></div>
-        <div class="tile-name">Canva</div>
-        <div class="tile-desc">Design & marketing materials</div>
+        <span class="tile-emoji">🎨</span>
+        <div class="tile-body"><div class="tile-name">Canva</div><div class="tile-desc">Design</div></div>
       </a>
       <a class="tile" href="https://www.youtube.com/studio" target="_blank" rel="noopener" data-tags="youtube studio video content channel">
-        <div class="tile-top"><span class="tile-emoji">🎬</span></div>
-        <div class="tile-name">YouTube Studio</div>
-        <div class="tile-desc">Lafayette/Louisville content channel</div>
+        <span class="tile-emoji">🎬</span>
+        <div class="tile-body"><div class="tile-name">YT Studio</div><div class="tile-desc">Content</div></div>
       </a>
       <a class="tile" href="https://mileiq.com" target="_blank" rel="noopener" data-tags="mileiq mileage tracking deduction business">
-        <div class="tile-top"><span class="tile-emoji">🚗</span></div>
-        <div class="tile-name">MileIQ</div>
-        <div class="tile-desc">Mileage tracking for deductions</div>
+        <span class="tile-emoji">🚗</span>
+        <div class="tile-body"><div class="tile-name">MileIQ</div><div class="tile-desc">Mileage</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- FITNESS / GYM -->
+  <div class="section" data-section id="fitness">
+    <div class="section-header">
+      <span class="section-icon">💪</span>
+      <span class="section-title">Fitness · Gym & Strength</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://claude.ai/chat/ec45757c-3a1a-4777-a012-114e3803edaf" target="_blank" rel="noopener" data-tags="40 minute workout superset thread gym daily">
+        <span class="tile-emoji">🏋️</span>
+        <div class="tile-body"><div class="tile-name">Daily 40-Min</div><div class="tile-desc">Workout thread</div></div>
+        <span class="tile-badge-dot dot-active"></span>
+      </a>
+      <a class="tile" href="https://www.strava.com" target="_blank" rel="noopener" data-tags="strava fitness training activities log">
+        <span class="tile-emoji">📊</span>
+        <div class="tile-body"><div class="tile-name">Strava</div><div class="tile-desc">Activity log</div></div>
+      </a>
+      <a class="tile" href="#" onclick="alert('Push-ups · Rows · OHP · Goblet Squat · Reverse Lunges · Plank — superset format, recovery stretch paired with each lift'); return false;" data-tags="superset strength routine push ups rows ohp goblet squat lunges plank">
+        <span class="tile-emoji">🔁</span>
+        <div class="tile-body"><div class="tile-name">Superset Routine</div><div class="tile-desc">Strength + flex</div></div>
+      </a>
+      <a class="tile" href="#" onclick="alert('Dynamic warmup → Bodyweight strength (push-ups, side plank, glute bridge, hollow hold, plank-to-downdog) → Deep stretch (pigeon, hip flexor, hamstring, spinal twist, child\\'s pose)'); return false;" data-tags="bodyweight circuit no equipment plank pigeon stretch">
+        <span class="tile-emoji">🧘</span>
+        <div class="tile-body"><div class="tile-name">Bodyweight Circuit</div><div class="tile-desc">No equipment</div></div>
+      </a>
+      <a class="tile" href="#" onclick="alert('Swim progression target: 5+ unbroken laps. Last logged: 4 unbroken + rest + 2 more = 6 total.'); return false;" data-tags="swim laps pool progression">
+        <span class="tile-emoji">🏊</span>
+        <div class="tile-body"><div class="tile-name">Swim Log</div><div class="tile-desc">5+ unbroken goal</div></div>
+        <span class="tile-badge-dot dot-pending"></span>
+      </a>
+      <a class="tile" href="#" onclick="alert('Left shoulder monitoring: posterior deltoid/rotator cuff tension. No heavy overhead press, no decline push-ups, no face pulls until cleared. Incline push-ups OK.'); return false;" data-tags="shoulder injury recovery rotator cuff caution">
+        <span class="tile-emoji">⚠️</span>
+        <div class="tile-body"><div class="tile-name">Shoulder Watch</div><div class="tile-desc">Caution list</div></div>
+        <span class="tile-badge-dot dot-pending"></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- SUMMER CROSSOVER TRAINING -->
+  <div class="section" data-section id="summer">
+    <div class="section-header">
+      <span class="section-icon">🏔️</span>
+      <span class="section-title">Summer Crossover · Snowboard Prep</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="https://www.alltrails.com" target="_blank" rel="noopener" data-tags="trail running hiking colorado boulder lafayette routes">
+        <span class="tile-emoji">🏃</span>
+        <div class="tile-body"><div class="tile-name">Trail Running</div><div class="tile-desc">Route finder</div></div>
+        <span class="tile-badge-dot dot-active"></span>
+      </a>
+      <a class="tile" href="https://www.alltrails.com" target="_blank" rel="noopener" data-tags="hiking trails boulder lafayette colorado routes">
+        <span class="tile-emoji">🥾</span>
+        <div class="tile-body"><div class="tile-name">Hiking</div><div class="tile-desc">Leg endurance</div></div>
+      </a>
+      <a class="tile" href="https://www.mountainproject.com" target="_blank" rel="noopener" data-tags="bouldering climbing gym colorado boulder routes grades">
+        <span class="tile-emoji">🧗</span>
+        <div class="tile-body"><div class="tile-name">Bouldering</div><div class="tile-desc">Grip + core</div></div>
+        <span class="tile-badge-dot dot-active"></span>
+      </a>
+      <a class="tile" href="https://www.mountainproject.com" target="_blank" rel="noopener" data-tags="trail climbing routes colorado">
+        <span class="tile-emoji">⛰️</span>
+        <div class="tile-body"><div class="tile-name">Trail Climbing</div><div class="tile-desc">Stability</div></div>
+      </a>
+      <a class="tile" href="#" onclick="alert('BMX status: once shoulder heals and rear rim sourced. Builds explosive leg power, balance, and core — direct carryover to snowboard edge control.'); return false;" data-tags="bmx biking rear rim shoulder waiting">
+        <span class="tile-emoji">🚲</span>
+        <div class="tile-body"><div class="tile-name">BMX</div><div class="tile-desc">Pending rim/shoulder</div></div>
+        <span class="tile-badge-dot dot-pending"></span>
+      </a>
+      <a class="tile" href="#" onclick="alert('Crossover logic: Bouldering = grip strength + core stability for carving. Trail running = cardio base + ankle stability for variable terrain. BMX = explosive leg power + balance reflexes. Hiking = leg endurance for long days on the mountain.'); return false;" data-tags="snowboard crossover training logic summer prep">
+        <span class="tile-emoji">🏂</span>
+        <div class="tile-body"><div class="tile-name">Snowboard Prep</div><div class="tile-desc">Why it crosses over</div></div>
       </a>
     </div>
   </div>
