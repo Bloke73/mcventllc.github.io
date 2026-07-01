@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McVent LLC | Project Portfolio</title>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e44;
+    --navy-light: #243d56;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #8a6f30;
+    --white: #f4f6f8;
+    --muted: #8a9bb0;
+    --tag-bg: #1f3347;
+    --card-bg: #142333;
+    --border: #243d56;
+    --green: #4caf82;
+    --amber: #e8a04c;
+    --blue: #4c8fe8;
+    --red: #e85c4c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Georgia', serif;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    border-bottom: 2px solid var(--gold);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 38px; height: 38px;
+    background: var(--gold);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 16px;
+    letter-spacing: -1px;
+    flex-shrink: 0;
+  }
+  .logo-text { line-height: 1.1; }
+  .logo-name {
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .logo-sub {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+  }
+  nav { display: flex; gap: 8px; }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: color .2s, background .2s;
+  }
+  nav a:hover { color: var(--gold); background: var(--navy-light); }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 52px 24px 36px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 46px);
+    line-height: 1.15;
+    color: var(--white);
+    max-width: 680px;
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .hero p {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    font-family: 'Arial', sans-serif;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .stat { border-left: 2px solid var(--gold-dim); padding-left: 14px; }
+  .stat-num {
+    font-size: 26px;
+    color: var(--gold);
+    font-weight: bold;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    margin-top: 4px;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .filter-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    margin-right: 4px;
+  }
+  .filter-btn {
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+    font-weight: bold;
+  }
+
+  /* ── PROJECT GRID ── */
+  .grid-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8px 24px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  /* ── PROJECT CARD ── */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color .2s, transform .15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-2px);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .card-icon {
+    font-size: 26px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .status-pill {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  .status-active   { background: rgba(76,175,130,.15); color: var(--green); border: 1px solid rgba(76,175,130,.3); }
+  .status-proposal { background: rgba(232,160,76,.15); color: var(--amber); border: 1px solid rgba(232,160,76,.3); }
+  .status-concept  { background: rgba(76,143,232,.15); color: var(--blue);  border: 1px solid rgba(76,143,232,.3); }
+  .status-archive  { background: rgba(232,92,76,.15);  color: var(--red);   border: 1px solid rgba(232,92,76,.3); }
+
+  .card-title {
+    font-size: 18px;
+    color: var(--white);
+    line-height: 1.25;
+    margin-top: 2px;
+  }
+  .card-org {
+    font-size: 11px;
+    color: var(--gold-dim);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    margin-top: 2px;
+  }
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    font-family: 'Arial', sans-serif;
+    flex: 1;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    padding: 3px 9px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .card-date {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'Arial', sans-serif;
+    letter-spacing: .5px;
+  }
+  .card-link {
+    font-size: 11px;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color .2s;
+  }
+  .card-link:hover { color: var(--gold-light); }
+  .card-link::after { content: '→'; }
+
+  /* COMING SOON card */
+  .card-ghost {
+    border-style: dashed;
+    opacity: .45;
+    pointer-events: none;
+  }
+  .card-ghost .card-title { color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-text {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'Arial', sans-serif;
+    letter-spacing: .5px;
+  }
+  .footer-badge {
+    font-size: 10px;
+    color: var(--gold-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    border: 1px solid var(--gold-dim);
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero { padding: 32px 16px 28px; }
+    .grid-wrap { padding: 8px 16px 48px; grid-template-columns: 1fr; }
+    .filter-wrap { padding: 16px; }
+    nav { display: none; }
+    .hero-stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">Mc</div>
+      <div class="logo-text">
+        <div class="logo-name">McVent LLC</div>
+        <div class="logo-sub">Project Portfolio</div>
+      </div>
+    </a>
+    <nav>
+      <a href="#">Projects</a>
+      <a href="#">About</a>
+      <a href="mailto:mcventllc@gmail.com">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">McVent LLC · Lafayette, CO · Veteran-Owned</div>
+  <h1>Strategy, proposals &amp; concepts built to <em>move things forward</em>.</h1>
+  <p>Each project below is original work — market analysis, public proposals, business concepts, and operational builds. Built to solve real problems and presented here for review.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num" id="count-all">6</div><div class="stat-label">Total Projects</div></div>
+    <div class="stat"><div class="stat-num" id="count-active">1</div><div class="stat-label">Active Builds</div></div>
+    <div class="stat"><div class="stat-num" id="count-proposal">3</div><div class="stat-label">Proposals</div></div>
+    <div class="stat"><div class="stat-num" id="count-concept">2</div><div class="stat-label">Concepts</div></div>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-wrap">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" onclick="filter('all', this)">All</button>
+  <button class="filter-btn" onclick="filter('active', this)">Active</button>
+  <button class="filter-btn" onclick="filter('proposal', this)">Proposals</button>
+  <button class="filter-btn" onclick="filter('concept', this)">Concepts</button>
+</div>
+
+<!-- PROJECT GRID -->
+<div class="grid-wrap" id="grid">
+
+  <!-- 1. CDOT Staging Area -->
+  <div class="card" data-category="proposal">
+    <div class="card-header">
+      <span class="card-icon">🏔️</span>
+      <span class="status-pill status-proposal">Proposal</span>
+    </div>
+    <div>
+      <div class="card-title">I-70 Camper Van Staging Area</div>
+      <div class="card-org">CDOT · Eisenhower Tunnel Corridor</div>
+    </div>
+    <p class="card-desc">A public comment and formal concept proposing a fee-based overnight staging facility near Eisenhower-Johnson Tunnel for converted camper vans and truck campers. Structured as a public-private concession aligned to CDOT's 10-Year Plan. Includes three-tier pricing model and conservative revenue projections of ~$395K per ski season for an 80-stall facility.</p>
+    <div class="card-tags">
+      <span class="tag">Infrastructure</span>
+      <span class="tag">Public Policy</span>
+      <span class="tag">Outdoor Recreation</span>
+      <span class="tag">Concession Model</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-date">June 2026</span>
+      <a href="#" class="card-link">View Proposal</a>
+    </div>
+  </div>
+
+  <!-- 2. Lafayette Public Market -->
+  <div class="card" data-category="concept">
+    <div class="card-header">
+      <span class="card-icon">🏪</span>
+      <span class="status-pill status-concept">Concept</span>
+    </div>
+    <div>
+      <div class="card-title">Lafayette Public Market</div>
+      <div class="card-org">Tebo Property · Lafayette, CO</div>
+    </div>
+    <p class="card-desc">A master-lease / sublease public market concept targeting the underutilized Tebo property in Lafayette. Modeled on successful urban market hall formats. Designed to activate local vendor community and create recurring foot traffic in a corridor lacking destination retail. Revenue structured through sublease margins and event programming.</p>
+    <div class="card-tags">
+      <span class="tag">Real Estate</span>
+      <span class="tag">Community</span>
+      <span class="tag">Retail Activation</span>
+      <span class="tag">Lafayette</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-date">Spring 2026</span>
+      <a href="#" class="card-link">View Concept</a>
+    </div>
+  </div>
+
+  <!-- 3. Baseline Cannabis Campus -->
+  <div class="card" data-category="concept">
+    <div class="card-header">
+      <span class="card-icon">🌿</span>
+      <span class="status-pill status-concept">Concept</span>
+    </div>
+    <div>
+      <div class="card-title">Baseline Cannabis Campus</div>
+      <div class="card-org">8401 Baseline Rd · Former Republic Dispensary</div>
+    </div>
+    <p class="card-desc">Adaptive reuse concept for a 25-acre LI-zoned parcel (former Republic Dispensary site) along Baseline Road. Proposes a vertically integrated cannabis campus with processing, retail, education, and event space. Analysis includes zoning review, comparable campus models, and phased development framework.</p>
+    <div class="card-tags">
+      <span class="tag">Cannabis</span>
+      <span class="tag">Adaptive Reuse</span>
+      <span class="tag">Zoning</span>
+      <span class="tag">Phased Dev</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-date">Spring 2026</span>
+      <a href="#" class="card-link">View Concept</a>
+    </div>
+  </div>
+
+  <!-- 4. Pitch Night Event -->
+  <div class="card" data-category="active">
+    <div class="card-header">
+      <span class="card-icon">🎤</span>
+      <span class="status-pill status-active">Active Build</span>
+    </div>
+    <div>
+      <div class="card-title">McVent Pitch Night</div>
+      <div class="card-org">McVent LLC · Lafayette/Boulder Corridor</div>
+    </div>
+    <p class="card-desc">An original community pitch event format: 4–6 presenters, 3 minutes each, no slides, $5 door. Low barrier, high energy. Designed to activate the startup ecosystem in the Lafayette/Louisville/Boulder corridor where informal pitch infrastructure is absent. Phased growth model targets Startup Grind-style recurring format.</p>
+    <div class="card-tags">
+      <span class="tag">Events</span>
+      <span class="tag">Startup Ecosystem</span>
+      <span class="tag">Community</span>
+      <span class="tag">Boulder County</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-date">June 2026</span>
+      <a href="#" class="card-link">View Build</a>
+    </div>
+  </div>
+
+  <!-- 5. Denver Solar Orphan Market -->
+  <div class="card" data-category="proposal">
+    <div class="card-header">
+      <span class="card-icon">☀️</span>
+      <span class="status-pill status-proposal">Proposal</span>
+    </div>
+    <div>
+      <div class="card-title">Denver Orphaned Solar Systems</div>
+      <div class="card-org">McVent LLC · Denver Metro</div>
+    </div>
+    <p class="card-desc">Market gap analysis and service proposal targeting the growing inventory of residential solar systems in the Denver metro left without manufacturer support or qualified service providers. Research identifies installer exits, warranty gaps, and homeowner pain points as a serviceable niche for a veteran-owned repair and maintenance operation.</p>
+    <div class="card-tags">
+      <span class="tag">Solar</span>
+      <span class="tag">Market Gap</span>
+      <span class="tag">Denver Metro</span>
+      <span class="tag">Service Business</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-date">Spring 2026</span>
+      <a href="#" class="card-link">View Analysis</a>
+    </div>
+  </div>
+
+  <!-- 6. Launch Lab (CTE Capstone) -->
+  <div class="card" data-category="proposal">
+    <div class="card-header">
+      <span class="card-icon">🏫</span>
+      <span class="status-pill status-proposal">Portfolio</span>
+    </div>
+    <div>
+      <div class="card-title">Launch Lab — CTE Capstone Program</div>
+      <div class="card-org">Fort Lupton High School · Weld RE-8</div>
+    </div>
+    <p class="card-desc">Built from scratch over three years: a student-run retail store with live POS, a converted planetarium media production studio, a DECA chapter, and real supplier relationships including a Walmart prototype purchase order. Demonstrates program development, stakeholder coordination, and real-world business integration at the secondary level.</p>
+    <div class="card-tags">
+      <span class="tag">CTE</span>
+      <span class="tag">Education</span>
+      <span class="tag">DECA</span>
+      <span class="tag">Program Build</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-date">2023–2026</span>
+      <a href="#" class="card-link">View Program</a>
+    </div>
+  </div>
+
+  <!-- GHOST: Coming Soon -->
+  <div class="card card-ghost" data-category="none">
+    <div class="card-header">
+      <span class="card-icon">📐</span>
+      <span class="status-pill status-concept">Coming Soon</span>
+    </div>
+    <div>
+      <div class="card-title">Next Project</div>
+      <div class="card-org">McVent LLC</div>
+    </div>
+    <p class="card-desc">More in the pipeline. Check back soon.</p>
+    <div class="card-tags">
+      <span class="tag">TBD</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-date">2026</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">© 2026 McVent LLC · Lafayette, CO · All proposals are original work. Contact: mcventllc@gmail.com</span>
+    <span class="footer-badge">Veteran-Owned</span>
+  </div>
+</footer>
+
+<script>
+  function filter(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#grid .card').forEach(card => {
+      if (card.classList.contains('card-ghost')) return;
+      card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
