@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McVent LLC | Command Center</title>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e44;
+    --navy-light: #243d56;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #8a6f30;
+    --white: #f4f6f8;
+    --muted: #8a9bb0;
+    --border: #243d56;
+    --card-bg: #142333;
+    --green: #4caf82;
+    --amber: #e8a04c;
+    --red: #e85c4c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* PASSWORD SCREEN */
+  #pwd-screen {
+    position: fixed; inset: 0;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 999;
+    flex-direction: column;
+    gap: 20px;
+  }
+  #pwd-screen .lock-icon { font-size: 40px; }
+  #pwd-screen h2 {
+    font-family: Georgia, serif;
+    color: var(--gold); font-size: 20px; letter-spacing: 1px;
+  }
+  #pwd-screen p { color: var(--muted); font-size: 13px; }
+  #pwd-input {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--white);
+    font-size: 16px;
+    padding: 12px 16px;
+    width: 260px;
+    text-align: center;
+    outline: none;
+    letter-spacing: 2px;
+  }
+  #pwd-input:focus { border-color: var(--gold); }
+  #pwd-btn {
+    background: var(--gold);
+    border: none; border-radius: 6px;
+    color: var(--navy); font-weight: bold;
+    font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 12px 28px; cursor: pointer;
+    transition: background .2s;
+  }
+  #pwd-btn:hover { background: var(--gold-light); }
+  #pwd-error {
+    color: var(--red); font-size: 12px;
+    display: none; letter-spacing: 1px;
+  }
+
+  /* MAIN CONTENT - hidden until unlocked */
+  #main { display: none; }
+
+  /* NAV */
+  nav {
+    border-bottom: 2px solid var(--gold);
+    padding: 0 24px;
+    background: var(--navy);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between; height: 60px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark {
+    width: 36px; height: 36px; background: var(--gold);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-weight: bold; color: var(--navy); font-size: 15px; font-family: Georgia, serif;
+  }
+  .logo-name { font-size: 14px; font-weight: bold; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; }
+  .logo-sub { font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 10px; border-radius: 4px; transition: color .2s, background .2s;
+  }
+  .nav-links a:hover { color: var(--gold); background: var(--navy-light); }
+  .nav-links a.active { color: var(--gold); }
+
+  /* ALERT BANNER */
+  .alert {
+    background: rgba(232,160,76,.12);
+    border-bottom: 1px solid rgba(232,160,76,.3);
+    padding: 10px 24px;
+    font-size: 12px; color: var(--amber);
+    letter-spacing: .5px; text-align: center;
+  }
+
+  /* HEADER */
+  .page-header {
+    max-width: 1100px; margin: 0 auto;
+    padding: 32px 24px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-title { font-family: Georgia, serif; font-size: 22px; color: var(--white); }
+  .clock { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+
+  /* STATUS ROW */
+  .status-row {
+    max-width: 1100px; margin: 0 auto;
+    padding: 16px 24px;
+    display: flex; gap: 24px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .status-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-green { background: var(--green); }
+  .dot-amber { background: var(--amber); }
+  .dot-red { background: var(--red); }
+
+  /* SEARCH */
+  .search-wrap {
+    max-width: 1100px; margin: 0 auto; padding: 16px 24px;
+  }
+  #search {
+    width: 100%; background: var(--card-bg);
+    border: 1px solid var(--border); border-radius: 6px;
+    color: var(--white); font-size: 14px; padding: 10px 16px; outline: none;
+  }
+  #search:focus { border-color: var(--gold-dim); }
+  #search::placeholder { color: var(--muted); }
+
+  /* GRID */
+  .grid {
+    max-width: 1100px; margin: 0 auto;
+    padding: 8px 24px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .section-label {
+    grid-column: 1 / -1;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-dim); padding: 12px 0 4px;
+    border-bottom: 1px solid var(--border); margin-bottom: 4px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .card-title {
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 10px;
+  }
+  .links { display: flex; flex-direction: column; gap: 6px; }
+  .link-item {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; padding: 7px 10px; border-radius: 5px;
+    transition: background .15s;
+  }
+  .link-item:hover { background: var(--navy-light); }
+  .link-icon { font-size: 15px; flex-shrink: 0; width: 20px; text-align: center; }
+  .link-text { font-size: 13px; color: var(--white); }
+  .link-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .badge {
+    margin-left: auto; font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 10px;
+    font-weight: bold; flex-shrink: 0;
+  }
+  .badge-green { background: rgba(76,175,130,.15); color: var(--green); }
+  .badge-amber { background: rgba(232,160,76,.15); color: var(--amber); }
+  .badge-red   { background: rgba(232,92,76,.15);  color: var(--red); }
+
+  @media (max-width: 600px) {
+    .grid { padding: 8px 16px 48px; grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .page-header { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="pwd-screen">
+  <div class="lock-icon">🔐</div>
+  <h2>McVent Command Center</h2>
+  <p>Internal access only</p>
+  <input type="password" id="pwd-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPwd()">
+  <button id="pwd-btn" onclick="checkPwd()">Unlock</button>
+  <div id="pwd-error">Incorrect password. Try again.</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">Mc</div>
+      <div>
+        <div class="logo-name">McVent LLC</div>
+        <div class="logo-sub">Command Center</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="command-center.html" class="active">Command Center</a>
+      <a href="mcvent-projects.html">Projects</a>
+      <a href="mailto:jmcmillin5973@gmail.com">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="alert">⚠️ Certify UI weekly via MyUI+ · C&P exam pending scheduling · PERA rollover pending ~July 25</div>
+
+<div class="page-header">
+  <div class="page-title">Command Center</div>
+  <div class="clock" id="clock"></div>
+</div>
+
+<div class="status-row">
+  <div class="status-item"><div class="dot dot-green"></div>McVent LLC — Active</div>
+  <div class="status-item"><div class="dot dot-amber"></div>VA Claim — Pending C&P</div>
+  <div class="status-item"><div class="dot dot-amber"></div>PERA Rollover — In Process</div>
+  <div class="status-item"><div class="dot dot-green"></div>UI Claim — Active</div>
+  <div class="status-item"><div class="dot dot-red"></div>C&P Exam — Not Scheduled</div>
+</div>
+
+<div class="search-wrap">
+  <input type="text" id="search" placeholder="Search links..." oninput="filterLinks(this.value)">
+</div>
+
+<div class="grid" id="grid">
+
+  <div class="section-label">💰 Finance & Banking</div>
+  <div class="card">
+    <div class="card-title">Accounts</div>
+    <div class="links">
+      <a href="https://relay.fi" target="_blank" class="link-item">
+        <span class="link-icon">🏦</span>
+        <div><div class="link-text">Relay Banking</div><div class="link-sub">Business Checking · Savings</div></div>
+      </a>
+      <a href="https://www.zoho.com/books/" target="_blank" class="link-item">
+        <span class="link-icon">📒</span>
+        <div><div class="link-text">Zoho Books</div><div class="link-sub">Accounting · Invoices</div></div>
+      </a>
+      <a href="https://www.fidelity.com" target="_blank" class="link-item">
+        <span class="link-icon">📈</span>
+        <div><div class="link-text">Fidelity Solo 401(k)</div><div class="link-sub">Acct #266530043</div></div>
+        <span class="badge badge-amber">Rollover</span>
+      </a>
+      <a href="https://www.copera.org" target="_blank" class="link-item">
+        <span class="link-icon">🏛️</span>
+        <div><div class="link-text">PERA</div><div class="link-sub">Rollover in process</div></div>
+        <span class="badge badge-amber">Pending</span>
+      </a>
+      <a href="https://www.irs.gov" target="_blank" class="link-item">
+        <span class="link-icon">🧾</span>
+        <div><div class="link-text">IRS</div><div class="link-sub">Business account · EFTPS</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-label">🎖️ Benefits & VA</div>
+  <div class="card">
+    <div class="card-title">VA & Unemployment</div>
+    <div class="links">
+      <a href="https://www.va.gov" target="_blank" class="link-item">
+        <span class="link-icon">⭐</span>
+        <div><div class="link-text">VA.gov</div><div class="link-sub">Claim #129363449</div></div>
+        <span class="badge badge-amber">Pending</span>
+      </a>
+      <a href="https://www.myhealth.va.gov" target="_blank" class="link-item">
+        <span class="link-icon">🏥</span>
+        <div><div class="link-text">My HealtheVet</div><div class="link-sub">Healthcare · Golden VA Clinic</div></div>
+      </a>
+      <a href="https://myui.colorado.gov" target="_blank" class="link-item">
+        <span class="link-icon">📋</span>
+        <div><div class="link-text">MyUI+ Colorado</div><div class="link-sub">Weekly certification</div></div>
+        <span class="badge badge-green">Active</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-label">🏢 Business & Legal</div>
+  <div class="card">
+    <div class="card-title">McVent LLC Operations</div>
+    <div class="links">
+      <a href="https://www.sos.state.co.us" target="_blank" class="link-item">
+        <span class="link-icon">📜</span>
+        <div><div class="link-text">Colorado SOS</div><div class="link-sub">ID 20261635761</div></div>
+      </a>
+      <a href="https://sam.gov" target="_blank" class="link-item">
+        <span class="link-icon">🇺🇸</span>
+        <div><div class="link-text">SAM.gov</div><div class="link-sub">Federal registration</div></div>
+      </a>
+      <a href="https://vetbiz.va.gov" target="_blank" class="link-item">
+        <span class="link-icon">🎖️</span>
+        <div><div class="link-text">VetBiz / CVE</div><div class="link-sub">VOSB certification</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-label">✅ Tasks & Projects</div>
+  <div class="card">
+    <div class="card-title">Productivity</div>
+    <div class="links">
+      <a href="https://todoist.com" target="_blank" class="link-item">
+        <span class="link-icon">✅</span>
+        <div><div class="link-text">Todoist</div><div class="link-sub">Tasks & projects</div></div>
+      </a>
+      <a href="https://drive.google.com" target="_blank" class="link-item">
+        <span class="link-icon">📁</span>
+        <div><div class="link-text">Google Drive</div><div class="link-sub">Docs & files</div></div>
+      </a>
+      <a href="https://calendar.google.com" target="_blank" class="link-item">
+        <span class="link-icon">📅</span>
+        <div><div class="link-text">Google Calendar</div></div>
+      </a>
+      <a href="https://mail.google.com" target="_blank" class="link-item">
+        <span class="link-icon">📧</span>
+        <div><div class="link-text">Gmail — McVent</div><div class="link-sub">jmcmillin5973@gmail.com</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-label">💼 Job Search</div>
+  <div class="card">
+    <div class="card-title">Applications</div>
+    <div class="links">
+      <a href="https://www.linkedin.com" target="_blank" class="link-item">
+        <span class="link-icon">🔗</span>
+        <div><div class="link-text">LinkedIn</div></div>
+      </a>
+      <a href="https://www.usajobs.gov" target="_blank" class="link-item">
+        <span class="link-icon">🏛️</span>
+        <div><div class="link-text">USAJobs</div><div class="link-sub">Federal roles</div></div>
+      </a>
+      <a href="https://www.indeed.com" target="_blank" class="link-item">
+        <span class="link-icon">🔍</span>
+        <div><div class="link-text">Indeed</div></div>
+      </a>
+      <a href="https://www.edjoin.org" target="_blank" class="link-item">
+        <span class="link-icon">🏫</span>
+        <div><div class="link-text">EdJoin</div><div class="link-sub">Education roles</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-label">🛠️ Tools & Platforms</div>
+  <div class="card">
+    <div class="card-title">Daily Tools</div>
+    <div class="links">
+      <a href="https://claude.ai" target="_blank" class="link-item">
+        <span class="link-icon">🤖</span>
+        <div><div class="link-text">Claude AI</div></div>
+      </a>
+      <a href="https://www.canva.com" target="_blank" class="link-item">
+        <span class="link-icon">🎨</span>
+        <div><div class="link-text">Canva</div></div>
+      </a>
+      <a href="https://studio.youtube.com" target="_blank" class="link-item">
+        <span class="link-icon">▶️</span>
+        <div><div class="link-text">YouTube Studio</div></div>
+      </a>
+      <a href="https://mileiq.com" target="_blank" class="link-item">
+        <span class="link-icon">🚗</span>
+        <div><div class="link-text">MileIQ</div><div class="link-sub">Mileage tracking</div></div>
+      </a>
+      <a href="https://github.com/bloke73" target="_blank" class="link-item">
+        <span class="link-icon">💻</span>
+        <div><div class="link-text">GitHub</div><div class="link-sub">bloke73</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="section-label">📈 Business Development</div>
+  <div class="card">
+    <div class="card-title">Resources</div>
+    <div class="links">
+      <a href="https://www.sba.gov" target="_blank" class="link-item">
+        <span class="link-icon">🏢</span>
+        <div><div class="link-text">SBA</div></div>
+      </a>
+      <a href="https://www.score.org" target="_blank" class="link-item">
+        <span class="link-icon">📊</span>
+        <div><div class="link-text">SCORE</div><div class="link-sub">Mentorship</div></div>
+      </a>
+      <a href="https://www.lafayetteco.gov" target="_blank" class="link-item">
+        <span class="link-icon">🏙️</span>
+        <div><div class="link-text">City of Lafayette</div></div>
+      </a>
+      <a href="https://bouldercounty.gov/business" target="_blank" class="link-item">
+        <span class="link-icon">🏔️</span>
+        <div><div class="link-text">Boulder SBDC</div></div>
+      </a>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+</div><!-- /main -->
+
+<script>
+  // PASSWORD
+  function checkPwd() {
+    const val = document.getElementById('pwd-input').value;
+    if (val === 'Zunian4Ankus!') {
+      document.getElementById('pwd-screen').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+    } else {
+      document.getElementById('pwd-error').style.display = 'block';
+      document.getElementById('pwd-input').value = '';
+      document.getElementById('pwd-input').focus();
+    }
+  }
+
+  // CLOCK
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', {
+      weekday: 'short', month: 'short', day: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+  }
+  updateClock(); setInterval(updateClock, 1000);
+
+  // SEARCH
+  function filterLinks(q) {
+    q = q.toLowerCase();
+    document.querySelectorAll('.link-item').forEach(el => {
+      el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>

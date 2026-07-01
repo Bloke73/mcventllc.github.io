@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McVent LLC</title>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy-mid: #1a2e44;
+    --navy-light: #243d56;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #8a6f30;
+    --white: #f4f6f8;
+    --muted: #8a9bb0;
+    --border: #243d56;
+    --card-bg: #142333;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Georgia', serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* NAV */
+  nav {
+    border-bottom: 2px solid var(--gold);
+    padding: 0 24px;
+    background: var(--navy);
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; color: var(--navy); font-size: 15px;
+    font-family: Georgia, serif;
+  }
+  .logo-name {
+    font-size: 14px; font-weight: bold;
+    color: var(--gold); letter-spacing: 1px; text-transform: uppercase;
+  }
+  .logo-sub {
+    font-size: 9px; color: var(--muted);
+    letter-spacing: 2px; text-transform: uppercase;
+    font-family: Arial, sans-serif;
+  }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-family: Arial, sans-serif;
+    padding: 6px 10px; border-radius: 4px;
+    transition: color .2s, background .2s;
+  }
+  .nav-links a:hover { color: var(--gold); background: var(--navy-light); }
+  .nav-links a.active { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 64px 24px 48px;
+    text-align: center;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); font-family: Arial, sans-serif; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 52px);
+    line-height: 1.15; color: var(--white); margin-bottom: 18px;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero p {
+    font-size: 15px; color: var(--muted); max-width: 520px;
+    margin: 0 auto; line-height: 1.7; font-family: Arial, sans-serif;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 48px; height: 2px;
+    background: var(--gold-dim);
+    margin: 36px auto;
+  }
+
+  /* PAGE TILES */
+  .tiles {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 64px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .tile {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px 28px;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: border-color .2s, transform .15s;
+    position: relative; overflow: hidden;
+  }
+  .tile:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  .tile::after {
+    content: '→';
+    position: absolute;
+    bottom: 28px; right: 28px;
+    color: var(--gold-dim);
+    font-size: 20px;
+    transition: color .2s, right .2s;
+  }
+  .tile:hover::after { color: var(--gold); right: 22px; }
+  .tile-icon { font-size: 32px; }
+  .tile-label {
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--gold-dim); font-family: Arial, sans-serif;
+  }
+  .tile-title {
+    font-size: 22px; color: var(--white); line-height: 1.2;
+  }
+  .tile-desc {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.6; font-family: Arial, sans-serif;
+    padding-bottom: 24px;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+  }
+  .footer-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .footer-text {
+    font-size: 11px; color: var(--muted);
+    font-family: Arial, sans-serif;
+  }
+  .footer-badge {
+    font-size: 10px; color: var(--gold-dim);
+    letter-spacing: 2px; text-transform: uppercase;
+    font-family: Arial, sans-serif;
+    border: 1px solid var(--gold-dim);
+    padding: 3px 10px; border-radius: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 16px 32px; }
+    .tiles { padding: 0 16px 48px; grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">Mc</div>
+      <div>
+        <div class="logo-name">McVent LLC</div>
+        <div class="logo-sub">Lafayette, CO</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="mcvent-projects.html">Projects</a>
+      <a href="mailto:jmcmillin5973@gmail.com">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Veteran-Owned · AI Consulting · Lafayette, CO</div>
+  <h1>Where strategy meets <em>execution.</em></h1>
+  <p>McVent LLC is a veteran-owned AI consulting firm helping small businesses, educators, and entrepreneurs translate complexity into action.</p>
+</section>
+
+<div class="divider"></div>
+
+<div class="tiles">
+
+  <a href="mcvent-projects.html" class="tile">
+    <div class="tile-icon">📐</div>
+    <div class="tile-label">Public</div>
+    <div class="tile-title">Project Portfolio</div>
+    <div class="tile-desc">Original proposals, business concepts, and built programs — open for review.</div>
+  </a>
+
+  <a href="mailto:jmcmillin5973@gmail.com" class="tile">
+    <div class="tile-icon">✉️</div>
+    <div class="tile-label">Connect</div>
+    <div class="tile-title">Get in Touch</div>
+    <div class="tile-desc">Inquiries, consulting conversations, or just a conversation about a problem worth solving.</div>
+  </a>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">© 2026 McVent LLC · Lafayette, CO · Work in progress.</span>
+    <span class="footer-badge">Veteran-Owned</span>
+  </div>
+</footer>
+
+</body>
+</html>
