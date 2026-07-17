@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Peak Bar Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16110d;
+    --bg-card:#221a13;
+    --bg-card-hi:#2b2118;
+    --rule:#3c2f22;
+    --copper:#c17f45;
+    --amber:#e3ac52;
+    --cream:#f3e9da;
+    --muted:#a99680;
+    --sweet:#d98a9d;
+    --semisweet:#e3ac52;
+    --sour:#93b578;
+    --boozy:#c17f45;
+    --egg:#efe6d2;
+    --mocktail:#7fb0ac;
+    --other:#b090d0;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(193,127,69,0.10), transparent 60%),
+      var(--bg);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+  h1,h2,h3,.label-font{font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:0.04em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:linear-gradient(180deg, rgba(22,17,13,0.98) 70%, rgba(22,17,13,0.9));
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+    padding:14px 16px 10px;
+  }
+  .brand{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+  .brand-mark{display:flex; align-items:center; gap:10px;}
+  .brand-mark svg{flex-shrink:0;}
+  .brand-title{font-size:19px; font-weight:700; color:var(--cream); line-height:1;}
+  .brand-sub{font-family:'Inter'; text-transform:none; letter-spacing:0; font-size:11px; color:var(--muted); margin-top:2px;}
+
+  .search-wrap{position:relative; margin-bottom:10px;}
+  #search{
+    width:100%; padding:11px 14px 11px 38px; border-radius:999px;
+    border:1px solid var(--rule); background:var(--bg-card); color:var(--cream);
+    font-size:15px; font-family:'Inter'; outline:none;
+  }
+  #search:focus{border-color:var(--copper);}
+  #search::placeholder{color:var(--muted);}
+  .search-icon{position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none;}
+
+  .tabs{display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{
+    flex-shrink:0; padding:8px 15px; border-radius:999px; border:1px solid var(--rule);
+    background:transparent; color:var(--muted); font-family:'Oswald'; text-transform:uppercase;
+    letter-spacing:0.03em; font-size:12.5px; font-weight:600; cursor:pointer;
+  }
+  .tab.active{background:var(--copper); border-color:var(--copper); color:#1a130c;}
+
+  main{padding:16px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  /* ---------- Bar filter chips (cocktails view) ---------- */
+  .subfilter{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+  .chip{
+    padding:6px 12px; border-radius:8px; border:1px solid var(--rule); background:var(--bg-card);
+    color:var(--muted); font-size:12px; font-family:'Oswald'; letter-spacing:0.03em; cursor:pointer;
+  }
+  .chip.active{border-color:var(--amber); color:var(--amber); background:rgba(227,172,82,0.08);}
+
+  .cat-heading{
+    display:flex; align-items:center; gap:8px; margin:22px 0 10px;
+    color:var(--muted); font-size:12.5px; letter-spacing:0.08em;
+  }
+  .cat-heading .dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}
+  .cat-heading .line{flex:1; height:1px; background:var(--rule);}
+
+  /* ---------- Ticket card ---------- */
+  .ticket{
+    background:var(--bg-card);
+    border:1px solid var(--rule);
+    border-radius:var(--radius);
+    margin-bottom:10px;
+    overflow:hidden;
+    position:relative;
+  }
+  .ticket::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:3px;
+    background:repeating-linear-gradient(90deg, var(--cat-color,var(--copper)) 0 8px, transparent 8px 14px);
+    opacity:0.55;
+  }
+  .ticket-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:13px 14px 11px; cursor:pointer; gap:10px;
+  }
+  .ticket-name{font-family:'Oswald'; font-size:16px; font-weight:600; letter-spacing:0.02em; color:var(--cream); text-transform:none;}
+  .ticket-tags{display:flex; gap:6px; margin-top:5px; flex-wrap:wrap;}
+  .tag{
+    font-family:'IBM Plex Mono'; font-size:10px; padding:2px 7px; border-radius:5px;
+    color:#1a130c; font-weight:600; letter-spacing:0.02em;
+  }
+  .tag.bar{background:var(--rule); color:var(--muted);}
+  .chev{color:var(--muted); font-size:13px; transition:transform 0.2s; flex-shrink:0;}
+  .ticket.open .chev{transform:rotate(180deg);}
+
+  .ticket-body{display:none; padding:0 14px 16px; border-top:1px dashed var(--rule);}
+  .ticket.open .ticket-body{display:block;}
+
+  .spec-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:7px 0; border-bottom:1px solid rgba(60,47,34,0.5);
+    font-size:14px;
+  }
+  .spec-row:last-child{border-bottom:none;}
+  .spec-amt{font-family:'IBM Plex Mono'; color:var(--amber); font-weight:600; white-space:nowrap; padding-left:12px; text-align:right;}
+  .spec-ing{color:var(--cream);}
+
+  .meta-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;}
+  .meta-box{background:var(--bg-card-hi); border-radius:8px; padding:9px 11px;}
+  .meta-label{font-family:'Oswald'; font-size:10px; color:var(--muted); letter-spacing:0.06em; margin-bottom:3px;}
+  .meta-val{font-size:13px; color:var(--cream); line-height:1.35;}
+  .meta-box.full{grid-column:1/-1;}
+
+  .no-spec{
+    padding:10px 12px; background:rgba(193,127,69,0.08); border:1px dashed var(--copper);
+    border-radius:8px; font-size:12.5px; color:var(--muted); margin-top:10px; line-height:1.5;
+  }
+
+  /* ---------- Spirit / Beer / Wine cards ---------- */
+  .info-card{
+    background:var(--bg-card); border:1px solid var(--rule); border-radius:var(--radius);
+    padding:15px; margin-bottom:12px;
+  }
+  .info-card h3{font-size:16px; color:var(--amber); margin:0 0 7px; letter-spacing:0.02em;}
+  .info-card p{font-size:13.5px; line-height:1.55; color:var(--cream); margin:0 0 8px;}
+  .info-card p:last-child{margin-bottom:0;}
+  .info-card .eq{
+    font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--copper); background:var(--bg-card-hi);
+    padding:9px 11px; border-radius:7px; margin:8px 0; line-height:1.6;
+  }
+  .sub-styles{margin-top:8px;}
+  .sub-style{padding:8px 0; border-top:1px solid rgba(60,47,34,0.6);}
+  .sub-style b{color:var(--amber); font-size:13px; display:block; margin-bottom:2px;}
+  .sub-style span{font-size:13px; color:var(--cream); line-height:1.5;}
+
+  .highlight{color:var(--amber); font-weight:600;}
+
+  /* ---------- Techniques ---------- */
+  .rule-list{list-style:none; padding:0; margin:0;}
+  .rule-list li{
+    padding:11px 12px; background:var(--bg-card); border:1px solid var(--rule); border-radius:8px;
+    margin-bottom:8px; font-size:13.5px; line-height:1.5; color:var(--cream);
+  }
+  .rule-list li b{color:var(--amber);}
+  .callout{
+    background:linear-gradient(135deg, rgba(193,127,69,0.15), rgba(193,127,69,0.05));
+    border:1px solid var(--copper); border-radius:10px; padding:14px; margin:16px 0;
+    font-size:13.5px; line-height:1.6;
+  }
+  .callout b{color:var(--amber); font-family:'Oswald'; letter-spacing:0.03em;}
+
+  .section-title{font-size:20px; color:var(--cream); margin:0 0 4px;}
+  .section-sub{font-size:12.5px; color:var(--muted); margin-bottom:18px; text-transform:none; letter-spacing:0; font-family:'Inter';}
+
+  .empty-state{text-align:center; padding:40px 20px; color:var(--muted); font-size:13.5px;}
+
+  @media (min-width:680px){
+    main{max-width:760px; margin:0 auto;}
+    header{padding:16px 24px 12px;}
+    .meta-grid{grid-template-columns:1fr 1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+        <path d="M4 3h16l-6.5 8v7l3 2H7.5l3-2v-7L4 3z" stroke="#e3ac52" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <div class="brand-title">Peak Bar Reference</div>
+        <div class="brand-sub">Bar 2 &amp; Bar 3 · study &amp; shift cheat sheet</div>
+      </div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </span>
+    <input id="search" type="text" placeholder="Search a drink or ingredient…" autocomplete="off">
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="cocktails">Cocktails</button>
+    <button class="tab" data-tab="spirits">Spirits</button>
+    <button class="tab" data-tab="beerwine">Beer &amp; Wine</button>
+    <button class="tab" data-tab="technique">Techniques</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ COCKTAILS ============ -->
+  <section id="cocktails" class="active">
+    <div class="subfilter" id="barFilter">
+      <button class="chip active" data-bar="all">All</button>
+      <button class="chip" data-bar="2">Bar 2</button>
+      <button class="chip" data-bar="3">Bar 3</button>
+    </div>
+    <div id="cocktailList"></div>
+    <div id="emptyState" class="empty-state" style="display:none;">No drinks match that search.</div>
+  </section>
+
+  <!-- ============ SPIRITS ============ -->
+  <section id="spirits">
+    <div class="section-title">Spirit &amp; Product Knowledge</div>
+    <div class="section-sub">Bar 3 written-test material — know this cold.</div>
+
+    <div class="info-card">
+      <h3>Fermentation</h3>
+      <p>The biotransformation of organic substances via enzymes from yeast and bacteria. Yeast cells eat the sugars in your <span class="highlight">mash</span> and excrete <span class="highlight">ethanol</span> and CO₂.</p>
+      <div class="eq">Raw Organic Material (sugars) + Yeast &amp; Enzymes + Water<br>= CO₂ (by-product) + Heat + Ethanol</div>
+    </div>
+
+    <div class="info-card">
+      <h3>Distillation</h3>
+      <p>The process by which ethanol in a fermented substance is extracted and concentrated through successive heating and cooling. Many methods exist.</p>
+      <p><b style="color:var(--amber)">Distillate</b> — the liquid product of distillation. Distillates categorized as alcohol beverages are called <span class="highlight">Spirits</span>, separated into three parts: <b>Heads, Hearts, and Tails.</b></p>
+    </div>
+
+    <div class="info-card">
+      <h3>Vodka</h3>
+      <p>Colorless, odorless, tasteless neutral grain spirit from continuous stills, distilled to very high purity. Off the still it's <span class="highlight">95–97% ethanol</span>, then filtered through charcoal or silver and diluted to <span class="highlight">35–50% ABV (80 proof)</span>.</p>
+      <p>Traditional mash: rye, wheat, potatoes, molasses from sugar beets. Today, any starchy or sugary plant.</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Gin</h3>
+      <p>Flavored neutral grain spirit, made via distillation and sometimes infusion or compounding. Flavored with <span class="highlight">juniper berries and botanicals</span>.</p>
+      <div class="sub-styles">
+        <div class="sub-style"><b>London Dry</b><span>Originally London, now made anywhere. No added sweeteners — juniper forward.</span></div>
+        <div class="sub-style"><b>Genever</b><span>Notes of rye, maize, barley. Most popular in Holland &amp; Belgium.</span></div>
+        <div class="sub-style"><b>Old Tom</b><span>"Cordial" style — masks rough notes with lemon or anise, or sweetened with licorice/sugar.</span></div>
+        <div class="sub-style"><b>Sloe Gin</b><span>British, infused with blackthorn berries, sweetened with sugar. Purple in color.</span></div>
+        <div class="sub-style"><b>Navy Strength</b><span>Joked to ignite near gunpowder if spilled on a naval ship. ~57% ABV.</span></div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>Rum</h3>
+      <p>Any distilled alcoholic beverage made from <span class="highlight">sugar cane or molasses</span>. High sucrose content makes it ideal for alcohol production. Made worldwide, wherever sugarcane grows.</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Mezcal</h3>
+      <p>Made from roasting the <span class="highlight">heart of a piña (agave) plant</span> to use as mash. Must now be made in one of nine Mexican states: <b>Oaxaca, Durango, Guerrero, San Luis Potosí, Zacatecas, Tamaulipas, Guanajuato, Michoacán, Puebla.</b></p>
+    </div>
+
+    <div class="info-card">
+      <h3>Tequila</h3>
+      <p>A regionally defined type of mezcal made through <span class="highlight">double distillation of 100% Blue Agave (Weber varietal)</span>. Named for the city of Tequila in Jalisco.</p>
+      <p>Can only be produced in <b>Jalisco</b> plus nearby municipalities: <b>Michoacán, Nayarit &amp; Tamaulipas.</b></p>
+    </div>
+
+    <div class="info-card">
+      <h3>Whisky / Whiskey</h3>
+      <p>No global legal definition, but agreed to be a <span class="highlight">cereal-grain based, non-neutral grain spirit</span> generally aged in wood barrels. Common grains: <b>corn, barley, wheat, rye.</b></p>
+      <div class="sub-styles">
+        <div class="sub-style"><b>Bourbon</b><span>Must be made in the U.S., ≥51% corn (usually 5–15% barley, rest rye or wheat). Off-still ≤62.5% ABV, cut to 40–80% in bottle. Aged min. 2 years in charred new American white oak.</span></div>
+        <div class="sub-style"><b>Canadian Whisky</b><span>Distilled in Canada. Aged in new or used American oak, min. 3 years. Bottled at 40% ABV or higher.</span></div>
+        <div class="sub-style"><b>Irish Whiskey</b><span>7 styles: Single Pot Still (triple distilled, barley malt + unmalted barley), Single Malt (triple/double distilled, malted barley), Grain Whisky (continuous still, mixed grains), Blended Whisky (a blend of the above).</span></div>
+        <div class="sub-style"><b>Scotch Whisky</b><span>Matured in one Scottish warehouse, oak casks ≤700L, min. 3 years. Traditionally one water source + malted barley. Peat fire drying gives the smoky taste.</span></div>
+        <div class="sub-style"><b>Japanese Whisky</b><span>Youngest whisky-making country — pioneered by Suntory &amp; Nikka, founders trained in Scotland. More aromatic, lighter body than Scotch. Longer fermentation, ultra-clear wort, often aged in Japanese oak.</span></div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b>Marketing knowledge:</b> Bar 3 bartenders should be able to briefly explain what Peak offers and the differences between bar packages at marketing events — but <b>never quote or talk pricing.</b>
+    </div>
+  </section>
+
+  <!-- ============ BEER & WINE ============ -->
+  <section id="beerwine">
+    <div class="section-title">Beer &amp; Wine Styles</div>
+    <div class="section-sub">Bar 2 written-test material.</div>
+
+    <div class="info-card">
+      <h3>Beer</h3>
+      <div class="sub-styles" style="margin-top:0;">
+        <div class="sub-style" style="border-top:none; padding-top:0;"><b>Lager</b><span>Beer produced from bottom-fermenting yeast, distinguished from ales (top-fermented).</span></div>
+        <div class="sub-style"><b>Pale Ale</b><span>Floral, fruity, citrus-like, piney, resinous American hops. Medium-bodied, low-medium caramel, toasted maltiness.</span></div>
+        <div class="sub-style"><b>Amber</b><span>Medium-high malt character, medium-low caramel from roasted crystal malts. American-hop notes of citrus, fruit, pine balance the malt sweetness.</span></div>
+        <div class="sub-style"><b>IPA</b><span>Made with extra hops. Ranges from intensely bitter to strong citrus.</span></div>
+        <div class="sub-style"><b>Stout</b><span>Warm-fermented ale style, dark color (opaque deep brown/black), distinct roasted note.</span></div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>White Wine</h3>
+      <div class="sub-styles" style="margin-top:0;">
+        <div class="sub-style" style="border-top:none; padding-top:0;"><b>Pinot Gris</b><span>Less aromatic than Sauvignon Blanc, drier than Chardonnay. Full-bodied, fresh, spicy, notes of tropical/stone fruit or citrus. Riper grapes = less acidic; typically medium–medium-high acid.</span></div>
+        <div class="sub-style"><b>Sauvignon Blanc</b><span>Bright acidity, tart apple &amp; kiwi. Cooler climates → grassy/green flavors; warmer climates → more tropical.</span></div>
+        <div class="sub-style"><b>Chardonnay</b><span>Malolactic fermentation gives buttery notes. Big difference between oaked and unoaked.</span></div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h3>Red Wine</h3>
+      <div class="sub-styles" style="margin-top:0;">
+        <div class="sub-style" style="border-top:none; padding-top:0;"><b>Pinot Noir</b><span>Juicy acidity, bright red fruits. Pale-medium color, high acidity, fine soft tannins.</span></div>
+        <div class="sub-style"><b>Garnacha</b><span>Dry, semi-sweet, or sweet styles. Raspberry, black cherry, strawberry; star anise, cinnamon, black pepper if oak-aged.</span></div>
+        <div class="sub-style"><b>Cabernet Sauvignon</b><span>Dark fruit — blackcurrant (cassis), black cherry, blackberry — with green bell pepper, spice, tobacco, wood, vanilla.</span></div>
+        <div class="sub-style"><b>Malbec</b><span>Dry, full-bodied, dark fruit nose — blackberry, red plum. Jammy, with vanilla, tobacco, dark chocolate, oak notes. Medium acid, moderate tannins.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TECHNIQUES ============ -->
+  <section id="technique">
+    <div class="section-title">Build, Glass &amp; Method Rules</div>
+    <div class="section-sub">The logic behind every spec — use this when a recipe doesn't say the method.</div>
+
+    <ul class="rule-list">
+      <li>Drinks <b>with juices</b> are typically <b>shaken.</b></li>
+      <li>Drinks that are <b>spirit forward</b> are <b>stirred.</b></li>
+      <li><b>Built</b> drinks are made in the glass they're served in, sometimes with a quick stir to incorporate juices/spirits.</li>
+      <li><b>Coupe glasses</b> are for drinks served <b>up</b> (not on ice).</li>
+      <li>Drinks in a <b>rocks glass</b> are served <b>over ice.</b> A guest can ask for their "up" drink in a rocks glass instead.</li>
+      <li><b>Spritz</b> drinks are typically served in a <b>wine glass with ice.</b></li>
+    </ul>
+
+    <div class="callout">
+      <b>Mocktail rule:</b> Mocktails are 100% alcohol-free (0% ABV). You <b>cannot use bitters</b> in a mocktail — bitters are normally made with a neutral grain spirit base (like heavy-proof vodka). <b>A mocktail = no bitters.</b> Top mocktails with a soda of any flavor as a good finishing technique.
+    </div>
+
+    <div class="section-title" style="font-size:17px; margin-top:26px;">Bar 3 Practical Note</div>
+    <ul class="rule-list">
+      <li>The Bar 3 practical is <b>5 drinks in 5 minutes</b>, and can pull from <b>both</b> the Bar 2 and Bar 3 recipe lists — don't drop the Bar 2 classics once you move up.</li>
+      <li>Egg white drinks: <b>dry shake</b> first (no ice), then add ice and shake again — or reverse shake — then <b>double fine strain.</b></li>
+      <li><b>Specialty drinks</b> (marked S* in the class list) won't be at every event unless requested on the client's contract/menu.</li>
+    </ul>
+  </section>
+
+</main>
+
+<script>
+const COCKTAILS = [
+  // ---------------- BAR 2 ----------------
+  {name:"Wildflower Spritz", bar:2, cat:"Sweet", ing:[["1 oz","Vodka"],["0.5 oz","Wildflower Syrup"],["0.5 oz","Lemon Juice"],["2 oz","Champagne"]], method:"Shaken, served up. Topped with Champagne.", glass:"Coupe", garnish:"Edible flowers"},
+  {name:"Cucumber Cooler", bar:2, cat:"Sweet", ing:[["1.5 oz","Gin"],["0.75 oz","Lime Juice"],["0.75 oz","Cucumber Syrup"],["3 oz","Soda Water"]], method:"Shaken, served over ice.", glass:"Rocks", garnish:"Cucumber slice"},
+  {name:"Tequila Sunrise", bar:2, cat:"Sweet", ing:[["1.5 oz","Tequila"],["3 oz","Orange Juice"],["0.5 oz","Grenadine"]], method:"Built, served over ice. Grenadine floated.", glass:"Rocks", garnish:"Cherry"},
+  {name:"Moscow Mule", bar:2, cat:"Semi-Sweet", ing:[["1.5 oz","Vodka"],["0.5 oz","Lime Juice"],["1 dash","Angostura Bitters"],["3 oz","Ginger Beer"]], method:"Built, served over ice. Topped with Ginger Beer. Bitters floated.", glass:"Rocks or Copper Mug", garnish:"Lime wedge"},
+  {name:"Margarita", bar:2, cat:"Semi-Sweet", ing:[["1.5 oz","Tequila"],["0.75 oz","Lime Juice"],["0.5 oz","Triple Sec"],["0.25 oz","Simple Syrup"]], method:"Shaken, served over ice.", glass:"Rocks", garnish:"Lime wedge, optional salt rim"},
+  {name:"Cosmopolitan", bar:2, cat:"Semi-Sweet", ing:[["1.5 oz","Vodka"],["0.75 oz","Lime Juice"],["0.75 oz","Cointreau"],["0.5 oz","Cranberry Juice"]], method:"Shaken, served up.", glass:"Coupe", garnish:"Lime wheel"},
+  {name:"Whiskey Sour (no egg white)", bar:2, cat:"Sour", ing:[["1.5 oz","Whiskey"],["0.75 oz","Lemon Juice"],["0.75 oz","Simple Syrup"]], method:"Shaken, served over ice.", glass:"Rocks", garnish:"Lemon peel"},
+  {name:"Ranch Water", bar:2, cat:"Sour", ing:[["1.5 oz","Tequila"],["0.75 oz","Lime Juice"],["5 oz","Soda Water"]], method:"Built, served over ice.", glass:"Rocks", garnish:"Lime wedge"},
+  {name:"Paloma", bar:2, cat:"Sour", ing:[["2 oz","Tequila"],["0.5 oz","Lime Juice"],["0.5 oz","Simple Syrup"],["0.5 oz","Red Grapefruit Juice"]], method:"Shaken, served over ice. Topped with Grapefruit Soda.", glass:"Rocks", garnish:"Grapefruit / lime peel"},
+  {name:"Manhattan", bar:2, cat:"Boozy", ing:[["2 oz","Whiskey"],["1 oz","Sweet Vermouth"],["2 dashes","Angostura Bitters"]], method:"Stirred, served up or over ice.", glass:"Coupe or Rocks", garnish:"Cherry"},
+  {name:"Old Fashioned", bar:2, cat:"Boozy", ing:[["2 oz","Whiskey"],["0.25 oz","Simple Syrup"],["2 dashes","Angostura Bitters"]], method:"Built over ice, stirred.", glass:"Rocks", garnish:"Orange peel"},
+  {name:"Martini", bar:2, cat:"Boozy", ing:[["2 oz","Vodka or Gin"],["0.25 oz","Dry Vermouth"]], method:"Shaken or stirred, served up or over ice.", glass:"Coupe or Rocks", garnish:"Olive or lemon twist"},
+  {name:"Hibiscus Lemon Spritz", bar:2, cat:"Mocktail", ing:[["1 oz","Lemon Juice"],["1 oz","Hibiscus Syrup"],["3 oz","Soda Water"],["1 dash","Angostura Bitters — OMIT for mocktail"]], method:"Shaken, served over ice. Topped with Soda Water.", glass:"Rocks", garnish:"Edible orchids"},
+  {name:"Mango Mule", bar:2, cat:"Mocktail", ing:[["0.75 oz","Lime Juice"],["1.5 oz","Jumex Mango Juice"],["3 oz","Ginger Beer"]], method:"Built, served over ice.", glass:"Rocks or Copper Mug", garnish:"Lime wedge"},
+  {name:"Watermelon Mint Sour", bar:2, cat:"Mocktail", ing:[["2 oz","Watermelon Juice"],["0.75 oz","Lemon Juice"],["0.5 oz","Mint Simple Syrup"]], method:"Shaken, served up.", glass:"Coupe", garnish:"Mint sprig"},
+  // standard/classic recipes — pending Peak's official spec
+  {name:"Vodka Soda", bar:2, cat:"Boozy", standard:true, ing:[["2 oz","Vodka"],["—","Top with Soda Water"]], method:"Built over ice.", glass:"Rocks or Highball", garnish:"Lime wedge"},
+  {name:"Grey Hound", bar:2, cat:"Sweet", standard:true, ing:[["2 oz","Vodka"],["4 oz","Grapefruit Juice"]], method:"Built over ice. (Salt rim = a \"Salty Dog\")", glass:"Rocks or Highball", garnish:"Grapefruit wedge"},
+  {name:"Screw Driver", bar:2, cat:"Sweet", standard:true, ing:[["2 oz","Vodka"],["—","Top with Orange Juice"]], method:"Built over ice.", glass:"Rocks or Highball", garnish:"Orange wedge"},
+  {name:"Hot Toddy", bar:2, cat:"Boozy", standard:true, ing:[["1.5 oz","Whiskey"],["0.75 oz","Honey Syrup"],["0.5 oz","Lemon Juice"],["—","Top with Hot Water"]], method:"Built in a warm mug.", glass:"Mug", garnish:"Lemon wheel + cinnamon stick or cloves"},
+  {name:"Rob Roy", bar:2, cat:"Boozy", standard:true, ing:[["2 oz","Scotch"],["1 oz","Sweet Vermouth"],["2 dashes","Angostura Bitters"]], method:"Stirred, served up or over ice.", glass:"Coupe or Rocks", garnish:"Cherry"},
+  {name:"Daiquiri", bar:2, cat:"Sour", standard:true, ing:[["2 oz","White Rum"],["1 oz","Lime Juice"],["0.75 oz","Simple Syrup"]], method:"Shaken, served up.", glass:"Coupe", garnish:"Lime wheel"},
+
+  // ---------------- BAR 3 ----------------
+  {name:"Gimlet", bar:3, cat:"Sweet", ing:[["1.5 oz","Gin"],["0.75 oz","Lime Juice"],["0.75 oz","Simple Syrup"]], method:"Shaken, served up.", glass:"Coupe", garnish:"Lime wheel"},
+  {name:"Strawberry Fields", bar:3, cat:"Sweet", ing:[["1.5 oz","Vodka"],["0.5 oz","Strawberry Rhubarb Syrup"],["0.5 oz","Lemon Juice"],["0.5 oz","Aperol"]], method:"Shaken, served over ice.", glass:"Rocks", garnish:"Strawberry slice"},
+  {name:"Mojito", bar:3, cat:"Sweet", ing:[["1.5 oz","Rum"],["0.5 oz","Lime Juice"],["0.5 oz","Simple Syrup"],["5","Mint Leaves (muddled)"]], method:"Muddle mint, shaken, served over ice.", glass:"Rocks", garnish:"Mint sprig"},
+  {name:"French 75", bar:3, cat:"Sweet", ing:[["1 oz","Gin"],["0.5 oz","Lemon Juice"],["0.5 oz","Simple Syrup"],["—","Top with Champagne"]], method:"Shaken, served up. Topped with champagne.", glass:"Flute", garnish:"Lemon twist"},
+  {name:"Espresso Martini", bar:3, cat:"Semi-Sweet", ing:[["1.5 oz","Vodka"],["0.5 oz","Simple Syrup"],["0.5 oz","Kahlua"],["2 oz","Cold Brew"]], method:"Shaken, served up.", glass:"Coupe", garnish:"3 whole coffee beans"},
+  {name:"Whiskey Smash", bar:3, cat:"Semi-Sweet", ing:[["2 oz","Whiskey"],["0.75 oz","Simple Syrup"],["0.75 oz","Lemon Juice"],["4","Mint Leaves (muddled)"]], method:"Muddle mint, shaken, served over ice.", glass:"Rocks", garnish:"Mint sprig"},
+  {name:"Pimms and Palmer", bar:3, cat:"Semi-Sweet", ing:[["1 oz","Gin"],["1 oz","Pimm's"],["0.5 oz","Earl Grey Tea Syrup"],["0.75 oz","Lemon Juice"]], method:"Shaken with lemon and lime wheels, served over ice. Top with Ginger Ale.", glass:"Collins or Mason Jar", garnish:"Mint sprig"},
+  {name:"Palisade Smash", bar:3, cat:"Semi-Sweet", ing:[["1.5 oz","Bourbon"],["1 oz","Peach Puree"],["0.5 oz","Lemon Juice"],["4","Mint Leaves (muddled)"]], method:"Muddle mint, shaken, served over ice.", glass:"Rocks", garnish:"Mint sprig"},
+  {name:"New York Sour", bar:3, cat:"Sour", ing:[["1.5 oz","Whiskey"],["0.75 oz","Lemon Juice"],["0.75 oz","Simple Syrup"],["1 oz","Red Wine Float"]], method:"Shaken, served over ice. Red wine float.", glass:"Rocks", garnish:"Lemon peel"},
+  {name:"Ole Smokey", bar:3, cat:"Sour", ing:[["2 oz","Bourbon"],["0.25 oz","Maple Syrup"],["2 dashes","Black Walnut Bitters"]], method:"Built over ice, stirred.", glass:"Rocks", garnish:"Orange peel"},
+  {name:"Negroni", bar:3, cat:"Sour", ing:[["1 oz","Gin"],["1 oz","Campari"],["1 oz","Carpano Rosso"]], method:"Built over ice, stirred.", glass:"Rocks", garnish:"Orange peel"},
+  {name:"Mango Habanero Margarita", bar:3, cat:"Sour", ing:[["1 oz","Tequila"],["0.5 oz","Mezcal"],["0.75 oz","Lime Juice"],["0.75 oz","Mango Puree"],["0.5 oz","Habanero Simple Syrup"]], method:"Shaken, served over ice.", glass:"Rocks", garnish:"Dehydrated lime wheel"},
+  {name:"Witch in the Woods", bar:3, cat:"Egg White", ing:[["1.5 oz","Rye Whiskey"],["0.5 oz","Lemon Juice"],["0.5 oz","Tawny Port"],["1 oz","Liquid Egg White"]], method:"Dry shake, ice shake, double fine strain, served up.", glass:"Coupe", garnish:"Microgreens"},
+  {name:"Roses are Red", bar:3, cat:"Egg White", ing:[["1.5 oz","Tequila"],["0.75 oz","Lime Juice"],["0.5 oz","Raspberry Hibiscus Rose Syrup"],["0.25 oz","Cointreau"],["—","Egg White"]], method:"Dry shake, ice shake, double fine strain, served up.", glass:"Coupe", garnish:"Raspberries"},
+  {name:"Whiskey Sour w/ Egg White", bar:3, cat:"Egg White", ing:[["1.5 oz","Bourbon"],["0.75 oz","Simple Syrup"],["0.75 oz","Lemon Juice"],["1 oz","Liquid Egg White"]], method:"Dry Shake, Add Ice, Shake, Double Fine Strain.", glass:"Coupe", garnish:"Drop Angostura Bitters on top, strike through with a skewer for a pattern"},
+  {name:"Purple Ube Gin Fizz", bar:3, cat:"Egg White", ing:[["2 oz","Gin"],["1 oz","Heavy Cream"],["0.5 oz","Combier Liqueur de Framboise"],["0.5 oz","Lemon Juice"],["0.5 oz","Lime Juice"],["1 oz","Ube & Blackberry Syrup"],["0.75 oz","Egg Whites"],["1 oz","Soda Water"],["2 dashes","Orange Flower Water"]], method:"Dry shake with egg whites, add ice and re-shake (or reverse shake). Double fine strain most of the drink in, slowly top with soda water, pour remainder for a tall foamy top, add orange flower water to the center of the foam. Can be practiced with simple syrup instead of ube syrup.", glass:"Collins", garnish:"Blackberry powder dusted on top"},
+  {name:"Aperol Spritz", bar:3, cat:"Other", ing:[["2 oz","Champagne"],["1 oz","Aperol"],["1 oz","Soda Water"]], method:"Built, served up.", glass:"Wine glass", garnish:"Orange wedge"},
+  {name:"Starlino Rose Spritz", bar:3, cat:"Other", ing:[["2 oz","Champagne"],["1 oz","Starlino Rose"],["1 oz","Soda Water"]], method:"Built, served up. Smoked in a smoking box.", glass:"Wine glass", garnish:"Raspberries"},
+  {name:"Lillet Vermouth Spritz", bar:3, cat:"Other", ing:[["2 oz","Sparkling Wine"],["1 oz","Lillet Blanc Vermouth"],["1 oz","Sparkling Water"]], method:"Built, then stirred, served up.", glass:"Wine glass", garnish:"Lemon twist"},
+  // standard/classic recipes — pending Peak's official spec
+  {name:"John Daly", bar:3, cat:"Sweet", standard:true, ing:[["1 oz","Vodka"],["2 oz","Lemonade"],["2 oz","Sweetened Iced Tea"]], method:"Built over ice. (\"Arnold Palmer\" with vodka)", glass:"Collins or Highball", garnish:"Lemon wedge"},
+  {name:"Tom Collins", bar:3, cat:"Sweet", standard:true, ing:[["2 oz","Gin"],["0.75 oz","Lemon Juice"],["0.5 oz","Simple Syrup"],["—","Top with Soda Water"]], method:"Shaken, strained over fresh ice, topped with soda water.", glass:"Collins", garnish:"Lemon wheel + cherry"},
+  {name:"John Collins", bar:3, cat:"Sweet", standard:true, ing:[["2 oz","Whiskey"],["0.75 oz","Lemon Juice"],["0.5 oz","Simple Syrup"],["—","Top with Soda Water"]], method:"Same build as a Tom Collins, base spirit swapped to whiskey.", glass:"Collins", garnish:"Lemon wheel + cherry"},
+  {name:"Boulevardier", bar:3, cat:"Sour", standard:true, ing:[["1 oz","Bourbon or Rye"],["1 oz","Sweet Vermouth"],["1 oz","Campari"]], method:"Stirred, served over ice. (a \"whiskey Negroni\")", glass:"Rocks", garnish:"Orange peel"},
+  {name:"Vieux Carré", bar:3, cat:"Sour", standard:true, specialty:true, ing:[["0.75 oz","Rye Whiskey"],["0.75 oz","Cognac"],["0.75 oz","Sweet Vermouth"],["2 dashes","Peychaud's Bitters"],["2 dashes","Angostura Bitters"],["1 barspoon","Bénédictine"]], method:"Stirred, served over ice.", glass:"Rocks", garnish:"Lemon twist or cherry"},
+  {name:"Aviation", bar:3, cat:"Sweet", standard:true, specialty:true, ing:[["2 oz","Gin"],["0.5 oz","Maraschino Liqueur"],["0.5 oz","Lemon Juice"],["0.25 oz","Crème de Violette"]], method:"Shaken, served up.", glass:"Coupe", garnish:"Cherry"},
+  {name:"Mai Tai", bar:3, cat:"Sweet", standard:true, specialty:true, ing:[["1 oz","Light Rum"],["1 oz","Aged/Dark Rum"],["0.5 oz","Orange Curaçao"],["0.5 oz","Orgeat"],["0.5 oz","Lime Juice"]], method:"Shaken, served over crushed ice.", glass:"Rocks", garnish:"Mint sprig + lime shell"},
+  {name:"Ward 8", bar:3, cat:"Sour", standard:true, ing:[["2 oz","Rye Whiskey"],["0.75 oz","Lemon Juice"],["0.5 oz","Orange Juice"],["0.5 oz","Grenadine"]], method:"Shaken, served up or over ice.", glass:"Coupe or Rocks", garnish:"Cherry + orange wheel"},
+  {name:"Corpse Reviver #2", bar:3, cat:"Sour", standard:true, specialty:true, ing:[["0.75 oz","Gin"],["0.75 oz","Cointreau"],["0.75 oz","Lillet Blanc"],["0.75 oz","Lemon Juice"],["1 dash","Absinthe (rinse)"]], method:"Rinse chilled glass with absinthe, shake remaining ingredients, strain up.", glass:"Coupe", garnish:"Lemon twist or brandied cherry"},
+  {name:"Lemon Drop Martini", bar:3, cat:"Sweet", standard:true, ing:[["1.5 oz","Vodka"],["0.5 oz","Triple Sec"],["0.75 oz","Lemon Juice"],["0.25 oz","Simple Syrup"]], method:"Shaken, served up.", glass:"Coupe, sugar rim", garnish:"Lemon twist"},
+];
+
+const CAT_ORDER = ["Sweet","Semi-Sweet","Sour","Boozy","Egg White","Mocktail","Other"];
+const CAT_COLOR = {
+  "Sweet":"var(--sweet)","Semi-Sweet":"var(--semisweet)","Sour":"var(--sour)",
+  "Boozy":"var(--boozy)","Egg White":"var(--egg)","Mocktail":"var(--mocktail)","Other":"var(--other)"
+};
+
+let state = {bar:"all", q:""};
+
+function matches(c){
+  if(state.bar!=="all" && String(c.bar)!==state.bar) return false;
+  if(!state.q) return true;
+  const q = state.q.toLowerCase();
+  if(c.name.toLowerCase().includes(q)) return true;
+  if(c.ing && c.ing.some(i => i[1].toLowerCase().includes(q))) return true;
+  return false;
+}
+
+function specRows(ing){
+  return ing.map(([amt,name]) => `
+    <div class="spec-row">
+      <span class="spec-ing">${name}</span>
+      <span class="spec-amt">${amt}</span>
+    </div>`).join('');
+}
+
+function ticketHTML(c, idx){
+  const color = c.standard ? "var(--muted)" : (CAT_COLOR[c.cat] || "var(--copper)");
+  return `
+    <div class="ticket" style="--cat-color:${color}" data-idx="${idx}">
+      <div class="ticket-head" onclick="toggleTicket(${idx})">
+        <div>
+          <div class="ticket-name">${c.name}</div>
+          <div class="ticket-tags">
+            <span class="tag bar">Bar ${c.bar}</span>
+            ${c.specialty ? '<span class="tag bar">Specialty</span>' : ''}
+            ${c.standard ? '<span class="tag" style="background:transparent;border:1px solid var(--muted);color:var(--muted);">Standard — pending Peak spec</span>' : ''}
+          </div>
+        </div>
+        <span class="chev">▾</span>
+      </div>
+      <div class="ticket-body">
+        ${c.standard ? '<div class="no-spec" style="margin-top:12px; margin-bottom:0;">This is the classic bar recipe, not yet Peak\'s official spec. Update ratios/spirit brands here once you find the emailed Cocktail Recipe Study Guide.</div>' : ''}
+        ${specRows(c.ing)}
+        <div class="meta-grid">
+          <div class="meta-box"><div class="meta-label">Glass</div><div class="meta-val">${c.glass}</div></div>
+          <div class="meta-box"><div class="meta-label">Garnish</div><div class="meta-val">${c.garnish}</div></div>
+          <div class="meta-box full"><div class="meta-label">Method</div><div class="meta-val">${c.method}</div></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function render(){
+  const list = document.getElementById('cocktailList');
+  const filtered = COCKTAILS.map((c,i)=>({c,i})).filter(o=>matches(o.c));
+  document.getElementById('emptyState').style.display = filtered.length ? 'none' : 'block';
+
+  let html = '';
+  CAT_ORDER.forEach(cat=>{
+    const group = filtered.filter(o=>o.c.cat===cat);
+    if(!group.length) return;
+    html += `<div class="cat-heading"><span class="dot" style="background:${CAT_COLOR[cat]}"></span>${cat}<span class="line"></span></div>`;
+    group.forEach(o=>{ html += ticketHTML(o.c, o.i); });
+  });
+  list.innerHTML = html;
+}
+
+function toggleTicket(idx){
+  const el = document.querySelector(`.ticket[data-idx="${idx}"]`);
+  if(el) el.classList.toggle('open');
+}
+
+document.getElementById('search').addEventListener('input', e=>{
+  state.q = e.target.value.trim();
+  render();
+});
+
+document.getElementById('barFilter').addEventListener('click', e=>{
+  const chip = e.target.closest('.chip');
+  if(!chip) return;
+  document.querySelectorAll('#barFilter .chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  state.bar = chip.dataset.bar;
+  render();
+});
+
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('main > section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(tab.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'instant'});
+  });
+});
+
+render();
+</script>
+</body>
+</html>
