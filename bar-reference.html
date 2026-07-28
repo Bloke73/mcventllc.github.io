@@ -49,6 +49,15 @@
     padding:14px 16px 10px;
   }
   .brand{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+  .mod-badge{
+    display:flex; align-items:center; gap:6px; text-decoration:none; flex-shrink:0;
+    background:rgba(216,90,74,0.12); border:1px solid #a8503f; border-radius:999px;
+    padding:6px 11px 6px 9px; color:#e08a7c;
+  }
+  .mod-badge svg{flex-shrink:0;}
+  .mod-badge-text{display:flex; flex-direction:column; line-height:1.15;}
+  .mod-badge-label{font-family:'Oswald'; font-size:8.5px; letter-spacing:0.06em; text-transform:uppercase; color:#e08a7c;}
+  .mod-badge-num{font-family:'IBM Plex Mono'; font-size:12px; color:var(--cream); font-weight:600;}
   .brand-mark{display:flex; align-items:center; gap:10px;}
   .brand-mark svg{flex-shrink:0;}
   .brand-title{font-size:19px; font-weight:700; color:var(--cream); line-height:1;}
@@ -348,10 +357,105 @@
   }
   .quiz-btn-primary{background:var(--copper); border-color:var(--copper); color:#1a130c;}
   .quiz-btn-outline{background:transparent; color:var(--cream);}
+
+  /* ---------- Staff Info tab ---------- */
+  .staff-panel{display:none;}
+  .staff-panel.active{display:block;}
+
+  .contact-card{
+    background:var(--bg-card); border:1px solid var(--rule); border-radius:12px;
+    padding:14px 16px; margin-bottom:10px; display:flex; gap:14px; align-items:center;
+  }
+  .contact-avatar{
+    flex-shrink:0; width:48px; height:48px; border-radius:50%; background:var(--bg-card-hi);
+    border:1px solid var(--copper); display:flex; align-items:center; justify-content:center;
+    font-family:'Oswald'; font-size:15px; color:var(--amber); letter-spacing:0.02em;
+  }
+  .contact-name{font-family:'Oswald'; font-size:14.5px; color:var(--cream); margin-bottom:2px; letter-spacing:0.01em;}
+  .contact-role{font-size:11.5px; color:var(--muted); margin-bottom:4px;}
+  .contact-detail{font-size:12px; color:var(--amber); font-family:'IBM Plex Mono';}
+
+  .emergency-banner{
+    background:linear-gradient(135deg, rgba(216,90,74,0.18), rgba(216,90,74,0.05));
+    border:1px solid #a8503f; border-radius:10px; padding:13px 15px; margin-bottom:16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .emergency-banner .e-icon{flex-shrink:0; color:#e08a7c;}
+  .emergency-banner .e-label{font-family:'Oswald'; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:#e08a7c; margin-bottom:2px;}
+  .emergency-banner .e-num{font-family:'IBM Plex Mono'; font-size:17px; color:var(--cream); font-weight:600;}
+  .emergency-banner .e-sub{font-size:11px; color:var(--muted); margin-top:2px;}
+
+  .check-list{list-style:none; padding:0; margin:0 0 14px;}
+  .check-list li{
+    display:flex; align-items:center; gap:10px; padding:8px 2px; font-size:13.5px; color:var(--cream);
+    border-top:1px solid rgba(60,47,34,0.6);
+  }
+  .check-list li:first-child{border-top:none;}
+  .check-list.avoid li{color:var(--muted);}
+  .check-icon{
+    flex-shrink:0; width:18px; height:18px; display:flex; align-items:center; justify-content:center;
+    border-radius:50%; font-size:11px; font-weight:bold;
+  }
+  .check-icon.yes{background:rgba(147,181,120,0.18); color:var(--sour);}
+  .check-icon.no{background:rgba(216,90,74,0.15); color:#e08a7c;}
+
+  .stat-row{display:flex; gap:10px; margin-bottom:16px;}
+  .stat-box{flex:1; background:var(--bg-card); border:1px solid var(--rule); border-radius:10px; padding:14px 10px; text-align:center;}
+  .stat-box .stat-num{font-family:'Oswald'; font-size:23px; color:var(--amber); letter-spacing:0.01em;}
+  .stat-box .stat-label{font-size:10.5px; color:var(--muted); margin-top:4px; line-height:1.4;}
+
+  .step-list{list-style:none; padding:0; margin:0 0 16px; counter-reset:step;}
+  .step-list li{
+    position:relative; padding:10px 12px 10px 42px; background:var(--bg-card); border:1px solid var(--rule);
+    border-radius:8px; margin-bottom:8px; font-size:13.5px; line-height:1.5; color:var(--cream);
+  }
+  .step-list li::before{
+    counter-increment:step; content:counter(step); position:absolute; left:11px; top:11px;
+    width:20px; height:20px; border-radius:50%; background:var(--copper); color:#1a130c;
+    font-family:'Oswald'; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  }
+
+  .legend-row{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:16px;}
+  .legend-item{display:flex; align-items:center; gap:7px; font-size:12px; color:var(--cream);}
+  .legend-dot{width:11px; height:11px; border-radius:3px; flex-shrink:0;}
+
+  /* ---------- Password gate ---------- */
+  #pwd-screen{
+    position:fixed; inset:0; background:var(--bg); z-index:999;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    padding:20px; text-align:center;
+  }
+  #pwd-screen .lock-icon{color:var(--amber);}
+  #pwd-screen h2{font-family:'Oswald'; color:var(--cream); font-size:19px; letter-spacing:0.02em; text-transform:none;}
+  #pwd-screen p{color:var(--muted); font-size:13px; font-family:'Inter';}
+  #pwd-input{
+    background:var(--bg-card); border:1px solid var(--rule); border-radius:8px;
+    color:var(--cream); font-size:16px; padding:12px 16px; width:240px;
+    text-align:center; outline:none; letter-spacing:2px; font-family:'IBM Plex Mono';
+  }
+  #pwd-input:focus{border-color:var(--copper);}
+  #pwd-btn{
+    background:var(--copper); border:none; border-radius:8px; color:#1a130c; font-weight:bold;
+    font-family:'Oswald'; font-size:13px; letter-spacing:0.05em; text-transform:uppercase;
+    padding:12px 28px; cursor:pointer;
+  }
+  #pwd-btn:hover{background:var(--amber);}
+  #pwd-error{color:#e08a7c; font-size:12px; display:none; letter-spacing:0.02em;}
+  #main-content{display:none;}
 </style>
 </head>
 <body>
 
+<div id="pwd-screen">
+  <span class="lock-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+  <h2>Peak Bar Reference</h2>
+  <p>Enter the shift password to continue</p>
+  <input type="password" id="pwd-input" placeholder="Password" autocomplete="off" onkeydown="if(event.key==='Enter')checkPwd()">
+  <button id="pwd-btn" onclick="checkPwd()">Unlock</button>
+  <div id="pwd-error">Incorrect password. Try again.</div>
+</div>
+
+<div id="main-content">
 <header>
   <div class="brand">
     <div class="brand-mark">
@@ -363,6 +467,10 @@
         <div class="brand-sub">Bar 2 &amp; Bar 3 · study &amp; shift cheat sheet</div>
       </div>
     </div>
+    <a href="tel:7203391008" class="mod-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span class="mod-badge-text"><span class="mod-badge-label">MOD</span><span class="mod-badge-num">720-339-1008</span></span>
+    </a>
   </div>
   <div class="search-wrap">
     <span class="search-icon">
@@ -959,6 +1067,198 @@
 
     </div>
   </section>
+
+  <!-- ============ STAFF INFO ============ -->
+  <section id="staff">
+    <div class="section-title">Staff Info</div>
+    <div class="section-sub">Contacts, uniform, pay, and scheduling — everything from onboarding in one place.</div>
+    <div class="subfilter" id="staffToggle" style="flex-wrap:wrap;">
+      <button class="chip active" data-staff="contacts">Contacts &amp; Uniform</button>
+      <button class="chip" data-staff="pay">Pay &amp; Bonuses</button>
+      <button class="chip" data-staff="sched">Sherpa &amp; Scheduling</button>
+    </div>
+
+    <!-- ---- CONTACTS & UNIFORM ---- -->
+    <div id="contactsPanel" class="staff-panel active">
+
+      <div class="emergency-banner">
+        <span class="e-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <div>
+          <div class="e-label">Peak MOD — Emergency Line</div>
+          <div class="e-num">720-339-1008</div>
+          <div class="e-sub">Call (not text) within 48 hrs of your shift</div>
+        </div>
+      </div>
+
+      <div class="cat-heading"><div class="dot" style="background:var(--copper);"></div><span>Key Players</span><div class="line"></div></div>
+
+      <div class="contact-card">
+        <div class="contact-avatar">JB</div>
+        <div>
+          <div class="contact-name">Jake Bundy</div>
+          <div class="contact-role">Asst. General Manager</div>
+          <div class="contact-detail">jake@peakbev.com</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-avatar">JT</div>
+        <div>
+          <div class="contact-name">Jordan Thompson</div>
+          <div class="contact-role">Field Operations Manager</div>
+          <div class="contact-detail">jordanthompson@peakbev.com</div>
+        </div>
+      </div>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--sour);"></div><span>Catering Uniform</span><div class="line"></div></div>
+      <ul class="check-list">
+        <li><span class="check-icon yes">✓</span>Long sleeve, collared, button-up shirt — pure black</li>
+        <li><span class="check-icon yes">✓</span>Dress pant, covers to ankle, pure black, black belt</li>
+        <li><span class="check-icon yes">✓</span>Non-slip, pure black leather/vinyl shoes (incl. laces), black socks — clean &amp; polished</li>
+      </ul>
+      <div class="cat-heading" style="margin-top:6px;"><div class="dot" style="background:#e08a7c;"></div><span>What to Avoid</span><div class="line"></div></div>
+      <ul class="check-list avoid">
+        <li><span class="check-icon no">✕</span>Patterns, designs, or logos on shirts</li>
+        <li><span class="check-icon no">✕</span>Jeans, chinos, leggings, or capris</li>
+        <li><span class="check-icon no">✕</span>Athletic, running, or sporty-style shoes</li>
+      </ul>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--mocktail);"></div><span>Concessions Uniform</span><div class="line"></div></div>
+      <ul class="check-list">
+        <li><span class="check-icon yes">✓</span>T-shirt provided by Peak</li>
+        <li><span class="check-icon yes">✓</span>Blue, black, or khaki shorts, pants, or jeans</li>
+        <li><span class="check-icon yes">✓</span>Comfortable, closed-toe sneakers — good condition, presentable</li>
+      </ul>
+
+      <div class="callout"><b>Always check</b> the Sherpa event page — uniform can vary by event.</div>
+    </div>
+
+    <!-- ---- PAY & BONUSES ---- -->
+    <div id="payPanel" class="staff-panel">
+
+      <div class="cat-heading"><div class="dot" style="background:var(--copper);"></div><span>Paydates</span><div class="line"></div></div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">22nd</div><div class="stat-label">Payday for events worked 1st–15th</div></div>
+        <div class="stat-box"><div class="stat-num">7th</div><div class="stat-label">Payday for events worked 16th–30th</div></div>
+      </div>
+      <div class="callout"><b>Overtime</b> kicks in over 12 hrs/day or over 40 hrs/week (Mon–Sun).</div>
+      <ul class="rule-list">
+        <li>Payroll breakdown lives in Sherpa under <b>Staffing Report.</b></li>
+        <li>Gratuities and drive time won't show in the Staffing Report until end of day on the 1st and 16th (or the following Monday if that date falls on a weekend).</li>
+      </ul>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--amber);"></div><span>Tips &amp; Gratuities</span><div class="line"></div></div>
+      <ul class="rule-list">
+        <li><b>Catering &amp; concessions:</b> auto-gratuities and credit card tips are divided hourly by hours worked; cash tips on smaller events may be split at end of night.</li>
+        <li><b>Large concessions (concerts/festivals):</b> tips divided hourly; cash tips paid out on your paycheck with credit card tips.</li>
+        <li>Cut from an event before tips are divided? Ask your captain how to collect your cash tips.</li>
+        <li><b>Retroactive pay:</b> gratuities added after a pay period closes are paid out on your next check.</li>
+        <li>Gratuity questions go to your bar captain, who loops in Jake.</li>
+      </ul>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--boozy);"></div><span>Driving Incentive</span><div class="line"></div></div>
+      <ul class="rule-list">
+        <li>Based on distance from the Peak warehouse — <b>catering events only.</b></li>
+        <li>Every venue has an incentive amount listed under the <b>Venue tab</b> in Sherpa.</li>
+        <li>The driver gets the incentive for every staff member they drive to and from the shift.</li>
+        <li>Denver-metro venues are <b>not</b> eligible for drive time compensation.</li>
+      </ul>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--sweet);"></div><span>Payroll &amp; Paystubs</span><div class="line"></div></div>
+      <div class="resource-card">
+        <b>G&amp;A WorkSight</b>
+        <span>Log in → choose "Go to PrismHR" → Personal Info, Payroll Info, Tax Info, Benefits.</span>
+        <div class="resource-loc">accesshr@gnapartners.com · 1-866-497-4222 · Mon–Fri 7:30a–7p CT</div>
+      </div>
+      <ul class="rule-list">
+        <li>Paystubs: <b>Pay → Pay History.</b> Check every page — retroactive/bonus pay sometimes lands on a different date (1st or 15th).</li>
+        <li>Banking: <b>Pay → Direct Deposit</b> — split across accounts by % or $. Wait to close an old account until after a paycheck lands; bounced deposits can take up to 10 business days and delay your pay.</li>
+        <li>Tips look bigger than the staffing report? Likely past gratuity or retroactive pay added in.</li>
+      </ul>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--sour);"></div><span>Bonus Programs</span><div class="line"></div></div>
+      <ul class="rule-list">
+        <li><b>Referral bonus — $75</b> to you and the referred bartender, paid after they work 15 shifts (both must still be employed). Send Jordan a screenshot of your staffing report.</li>
+        <li><b>Employee shout-outs:</b> $10 if a client survey praises "bartenders/service" generally; $20 if they name you specifically. Surveys posted in the captain's room each pay period.</li>
+        <li>Bonuses pay out separately in the payroll system — they won't appear in the Sherpa staffing report.</li>
+      </ul>
+    </div>
+
+    <!-- ---- SHERPA & SCHEDULING ---- -->
+    <div id="schedPanel" class="staff-panel">
+
+      <div class="cat-heading"><div class="dot" style="background:var(--copper);"></div><span>Finding Open Shifts in Sherpa</span><div class="line"></div></div>
+      <div class="resource-card">
+        <b>Sherpa</b>
+        <span>payments.peakbev.com — log in with your email, temporary password <b style="color:var(--cream)">peak1234</b></span>
+        <div class="resource-loc">Change your password after first login</div>
+      </div>
+      <ol class="step-list">
+        <li>Choose <b>Events</b> in the side menu.</li>
+        <li>Choose <b>Shifts.</b></li>
+        <li>Filter to <b>Events Not Fully Scheduled</b> to see what's open.</li>
+      </ol>
+      <div class="legend-row">
+        <div class="legend-item"><div class="legend-dot" style="background:#3c2f22;"></div>Black — fully staffed</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#e08a7c;"></div>Red — available to sign up</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--sour);"></div>Green — you're scheduled</div>
+      </div>
+      <div class="callout">
+        <b>Reminders:</b> double-check Sherpa the day before and day of for time changes. On time means on-site at the event truck, ready to clock in — not still driving. Running late for any reason? <b>Call</b> the MOD, don't text or email.
+      </div>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--amber);"></div><span>Tier System &amp; Shift Release</span><div class="line"></div></div>
+
+      <div class="style-card" data-style="bar1">
+        <div class="style-head" onclick="toggleStyle(this)">
+          <div><div class="style-name">Bar 1</div><div class="style-tag-line">Shift release 3:30</div></div>
+          <span class="chev">▾</span>
+        </div>
+        <div class="style-body">
+          <div class="style-note">Truck layout, satellite bar setup, core wine &amp; beer, basic garnishes, tray passing, opening wine, dinner wine service, confidence bussing tables.</div>
+        </div>
+      </div>
+      <div class="style-card" data-style="bar2">
+        <div class="style-head" onclick="toggleStyle(this)">
+          <div><div class="style-name">Bar 2</div><div class="style-tag-line">Shift release 2:30</div></div>
+          <span class="chev">▾</span>
+        </div>
+        <div class="style-body">
+          <div class="style-note">Bar tools &amp; glassware, reading/executing cocktail recipes, building/shaking/stirring fundamentals, intermediate garnishes, balanced cocktails, speed without sacrificing quality.</div>
+        </div>
+      </div>
+      <div class="style-card" data-style="bar3">
+        <div class="style-head" onclick="toggleStyle(this)">
+          <div><div class="style-name">Bar 3</div><div class="style-tag-line">Shift release 1:30</div></div>
+          <span class="chev">▾</span>
+        </div>
+        <div class="style-body">
+          <div class="style-note">Egg white cocktails, basic spirits knowledge, exceeding guest expectations through advanced service, advanced garnishes.</div>
+        </div>
+      </div>
+      <div class="footer-note-plain">Shift release happens every Tuesday, based on your bar level tier.</div>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:#e08a7c;"></div><span>Attendance &amp; Shift Trading</span><div class="line"></div></div>
+      <ul class="rule-list">
+        <li>Shifts more than 2 weeks out get re-released automatically.</li>
+        <li>Shifts within <b>14 days</b> are your responsibility — work it or get it covered.</li>
+        <li>Trade or give away shifts in the private Google Chat space <b>"Peak Up My Shifts."</b> Post the shift with a Sherpa screenshot.</li>
+        <li>Shift &lt;48 hrs away → call the MOD (720-339-1008). Shift &gt;48 hrs away → email jake@peakbev.com.</li>
+        <li>Don't post general availability or use the space for anything but shift coverage — extenuating circumstances go to quinton@peakbev.com.</li>
+      </ul>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--boozy);"></div><span>Shift Types</span><div class="line"></div></div>
+      <ul class="rule-list">
+        <li><b>On Call:</b> flat fee $20–$50 to be reachable in your listed window; if called, you're committed to the full event. Not called = night off. Paid as a bonus, not in the Sherpa staffing report.</li>
+        <li><b>Labor Only:</b> bartenders only, no Peak truck/product/captain. On-site contact is the client's event coordinator (not a Peak employee). Email your clock in/out times and whether you drove to jordanthompson@peakbev.com.</li>
+      </ul>
+
+      <div class="cat-heading" style="margin-top:22px;"><div class="dot" style="background:var(--other);"></div><span>Training Classes</span><div class="line"></div></div>
+      <ul class="rule-list">
+        <li>Bar Classes, Practice Sessions, and ABT Classes — reach out to jordanthompson@peakbev.com or the MOD if you can't make one.</li>
+        <li><b>Attendance policy:</b> one no-show/late cancel = 30 days ineligible for bar classes. Two = ineligible to level up for the year.</li>
+      </ul>
+    </div>
+  </section>
 </main>
 
 <button id="backToTop" aria-label="Back to top">
@@ -985,6 +1285,10 @@
   <button class="tab" data-tab="study">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6a2 2 0 0 1 2-2h9v16H6a2 2 0 0 1-2-2z"/><path d="M15 4h5v16h-5"/></svg>
     <span>Study</span>
+  </button>
+  <button class="tab" data-tab="staff">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+    <span>Staff Info</span>
   </button>
 </nav>
 
@@ -1161,7 +1465,31 @@ function toggleTicket(idx){
 document.getElementById('search').addEventListener('input', e=>{
   state.q = e.target.value.trim();
   render();
+  filterStaffInfo(state.q);
 });
+
+function filterStaffInfo(q){
+  const staffSection = document.getElementById('staff');
+  if(!staffSection) return;
+  const panels = staffSection.querySelectorAll('.staff-panel');
+  const query = q.toLowerCase();
+
+  if(!query){
+    // restore normal single-panel view
+    panels.forEach(p => p.style.display = '');
+    staffSection.querySelectorAll('.contact-card, .style-card, .resource-card, .callout, .check-list li, .rule-list li, .step-list li')
+      .forEach(el => el.style.display = '');
+    return;
+  }
+
+  // while searching, show all three sub-panels stacked so matches from any of them are visible
+  panels.forEach(p => p.style.display = 'block');
+
+  const items = staffSection.querySelectorAll('.contact-card, .style-card, .resource-card, .callout, .check-list li, .rule-list li, .step-list li');
+  items.forEach(el => {
+    el.style.display = el.textContent.toLowerCase().includes(query) ? '' : 'none';
+  });
+}
 
 document.getElementById('barFilter').addEventListener('click', e=>{
   const chip = e.target.closest('.chip');
@@ -1246,6 +1574,23 @@ if(studyToggle){
     document.querySelectorAll('.study-panel').forEach(p=>p.classList.remove('active'));
     document.getElementById(chip.dataset.study + 'Panel').classList.add('active');
     if(chip.dataset.study === 'quiz') startQuiz();
+  });
+}
+
+/* ---------- Staff Info sub-nav ---------- */
+const staffToggle = document.getElementById('staffToggle');
+if(staffToggle){
+  staffToggle.addEventListener('click', e=>{
+    const chip = e.target.closest('.chip');
+    if(!chip) return;
+    document.querySelectorAll('#staffToggle .chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.querySelectorAll('.staff-panel').forEach(p=>{ p.classList.remove('active'); p.style.display=''; });
+    document.getElementById(chip.dataset.staff + 'Panel').classList.add('active');
+    document.getElementById('search').value = '';
+    state.q = '';
+    document.querySelectorAll('#staff .contact-card, #staff .style-card, #staff .resource-card, #staff .callout, #staff .check-list li, #staff .rule-list li, #staff .step-list li')
+      .forEach(el => el.style.display = '');
   });
 }
 
@@ -1340,6 +1685,19 @@ if(backToTopBtn){
     window.scrollTo({top:0, behavior:'smooth'});
   });
 }
+
+function checkPwd(){
+  const val = document.getElementById('pwd-input').value;
+  if(val === 'Bar3Peak2026!'){
+    document.getElementById('pwd-screen').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+  } else {
+    document.getElementById('pwd-error').style.display = 'block';
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-input').focus();
+  }
+}
 </script>
+</div>
 </body>
 </html>
