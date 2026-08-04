@@ -14,7 +14,7 @@
     --bg-card-hi:#2b2118;
     --rule:#3c2f22;
     --copper:#c17f45;
-    --amber:#e3ac52;
+    --amber:#a8703a;
     --cream:#f3e9da;
     --muted:#a99680;
     --sweet:#d98a9d;
@@ -52,11 +52,11 @@
   .mod-badge{
     display:flex; align-items:center; gap:6px; text-decoration:none; flex-shrink:0;
     background:rgba(216,90,74,0.12); border:1px solid #a8503f; border-radius:999px;
-    padding:6px 11px 6px 9px; color:#e08a7c;
+    padding:6px 11px 6px 9px; color:#b8503a;
   }
   .mod-badge svg{flex-shrink:0;}
   .mod-badge-text{display:flex; flex-direction:column; line-height:1.15;}
-  .mod-badge-label{font-family:'Oswald'; font-size:8.5px; letter-spacing:0.06em; text-transform:uppercase; color:#e08a7c;}
+  .mod-badge-label{font-family:'Oswald'; font-size:8.5px; letter-spacing:0.06em; text-transform:uppercase; color:#b8503a;}
   .mod-badge-num{font-family:'IBM Plex Mono'; font-size:12px; color:var(--cream); font-weight:600;}
   .brand-mark{display:flex; align-items:center; gap:10px;}
   .brand-mark svg{flex-shrink:0;}
@@ -88,6 +88,9 @@
 
   /* ---------- Bar filter chips (cocktails view) ---------- */
   .subfilter{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+  .subfilter.scroll-row{flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; padding-bottom:2px;}
+  .subfilter.scroll-row::-webkit-scrollbar{display:none;}
+  .subfilter.scroll-row .chip{flex-shrink:0; white-space:nowrap;}
   .chip{
     padding:6px 12px; border-radius:8px; border:1px solid var(--rule); background:var(--bg-card);
     color:var(--muted); font-size:12px; font-family:'Oswald'; letter-spacing:0.03em; cursor:pointer;
@@ -380,8 +383,8 @@
     border:1px solid #a8503f; border-radius:10px; padding:13px 15px; margin-bottom:16px;
     display:flex; align-items:center; gap:12px;
   }
-  .emergency-banner .e-icon{flex-shrink:0; color:#e08a7c;}
-  .emergency-banner .e-label{font-family:'Oswald'; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:#e08a7c; margin-bottom:2px;}
+  .emergency-banner .e-icon{flex-shrink:0; color:#b8503a;}
+  .emergency-banner .e-label{font-family:'Oswald'; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:#b8503a; margin-bottom:2px;}
   .emergency-banner .e-num{font-family:'IBM Plex Mono'; font-size:17px; color:var(--cream); font-weight:600;}
   .emergency-banner .e-sub{font-size:11px; color:var(--muted); margin-top:2px;}
 
@@ -397,7 +400,7 @@
     border-radius:50%; font-size:11px; font-weight:bold;
   }
   .check-icon.yes{background:rgba(147,181,120,0.18); color:var(--sour);}
-  .check-icon.no{background:rgba(216,90,74,0.15); color:#e08a7c;}
+  .check-icon.no{background:rgba(216,90,74,0.15); color:#b8503a;}
 
   .stat-row{display:flex; gap:10px; margin-bottom:16px;}
   .stat-box{flex:1; background:var(--bg-card); border:1px solid var(--rule); border-radius:10px; padding:14px 10px; text-align:center;}
@@ -440,7 +443,7 @@
     padding:12px 28px; cursor:pointer;
   }
   #pwd-btn:hover{background:var(--amber);}
-  #pwd-error{color:#e08a7c; font-size:12px; display:none; letter-spacing:0.02em;}
+  #pwd-error{color:#b8503a; font-size:12px; display:none; letter-spacing:0.02em;}
   #main-content{display:none;}
 </style>
 </head>
@@ -602,7 +605,7 @@
   <section id="study">
     <div class="section-title">Study</div>
     <div class="section-sub">Everything you don't need mid-shift, but do need before a class or practical.</div>
-    <div class="subfilter" id="studyToggle" style="flex-wrap:wrap;">
+    <div class="subfilter scroll-row" id="studyToggle">
       <button class="chip active" data-study="technique">Techniques</button>
       <button class="chip" data-study="learn">Style Guide</button>
       <button class="chip" data-study="field">Field Notes</button>
@@ -1078,10 +1081,10 @@
   <section id="staff">
     <div class="section-title">Staff Info</div>
     <div class="section-sub">Contacts, uniform, pay, and scheduling — everything from onboarding in one place.</div>
-    <div class="subfilter" id="staffToggle" style="flex-wrap:wrap;">
-      <button class="chip active" data-staff="contacts">Contacts &amp; Uniform</button>
-      <button class="chip" data-staff="pay">Pay &amp; Bonuses</button>
-      <button class="chip" data-staff="sched">Sherpa &amp; Scheduling</button>
+    <div class="subfilter scroll-row" id="staffToggle">
+      <button class="chip active" data-staff="contacts">Contacts</button>
+      <button class="chip" data-staff="pay">Pay</button>
+      <button class="chip" data-staff="sched">Sherpa</button>
     </div>
 
     <!-- ---- CONTACTS & UNIFORM ---- -->
@@ -1195,7 +1198,7 @@
       <div class="cat-heading"><div class="dot" style="background:var(--copper);"></div><span>Finding Open Shifts in Sherpa</span><div class="line"></div></div>
       <div class="resource-card">
         <b>Sherpa</b>
-        <span>payments.peakbev.com — log in with your email, temporary password <b style="color:var(--cream)">peak1234</b></span>
+        <span>payments.peakbev.com — log in with your email, temporary password <b style="color:var(--cream)">TempPW123</b> (check your onboarding email if this doesn't work)</span>
         <div class="resource-loc">Change your password after first login</div>
       </div>
       <ol class="step-list">
@@ -1472,7 +1475,61 @@ document.getElementById('search').addEventListener('input', e=>{
   state.q = e.target.value.trim();
   render();
   filterStaffInfo(state.q);
+  filterSpiritsBeerTools(state.q);
+  filterStudy(state.q);
 });
+
+function filterSpiritsBeerTools(q){
+  const query = q.toLowerCase();
+  const spirits = document.getElementById('spirits');
+  const beerwine = document.getElementById('beerwine');
+  const tools = document.getElementById('tools');
+  [ [spirits, '.info-card, .callout'],
+    [beerwine, '.info-card, .callout'],
+    [tools, '.tool-tile'] ].forEach(([container, selector])=>{
+    if(!container) return;
+    container.querySelectorAll(selector).forEach(el=>{
+      el.style.display = query ? (el.textContent.toLowerCase().includes(query) ? '' : 'none') : '';
+    });
+  });
+}
+
+function filterStudy(q){
+  const studySection = document.getElementById('study');
+  if(!studySection) return;
+  const beerLearn = document.getElementById('beerLearn');
+  const wineLearn = document.getElementById('wineLearn');
+  const scenarioField = document.getElementById('scenarioField');
+  const instinctField = document.getElementById('instinctField');
+  const searchPanels = ['techniquePanel','learnPanel','fieldPanel','glassPanel']
+    .map(id=>document.getElementById(id)).filter(Boolean);
+  const items = studySection.querySelectorAll(
+    '.rule-list li, .callout, .style-card, .scenario-card, .instinct-block, .glassware-card'
+  );
+
+  if(!q){
+    // hand display control back to the active sub-tab (CSS classes take over)
+    searchPanels.forEach(p=>{ p.style.display=''; });
+    items.forEach(el=>{ el.style.display=''; });
+    if(beerLearn) beerLearn.style.display = document.querySelector('#learnToggle .chip[data-learn="beer"]')?.classList.contains('active') ? '' : 'none';
+    if(wineLearn) wineLearn.style.display = document.querySelector('#learnToggle .chip[data-learn="wine"]')?.classList.contains('active') ? '' : 'none';
+    if(scenarioField) scenarioField.style.display = document.querySelector('#fieldToggle .chip[data-field="scenario"]')?.classList.contains('active') ? '' : 'none';
+    if(instinctField) instinctField.style.display = document.querySelector('#fieldToggle .chip[data-field="instinct"]')?.classList.contains('active') ? '' : 'none';
+    return;
+  }
+
+  // while searching, stack every sub-tab (except Quiz) so a match anywhere in Study shows up
+  searchPanels.forEach(p=>{ p.style.display = 'block'; });
+  if(beerLearn) beerLearn.style.display = 'block';
+  if(wineLearn) wineLearn.style.display = 'block';
+  if(scenarioField) scenarioField.style.display = 'block';
+  if(instinctField) instinctField.style.display = 'block';
+
+  const query = q.toLowerCase();
+  items.forEach(el=>{
+    el.style.display = el.textContent.toLowerCase().includes(query) ? '' : 'none';
+  });
+}
 
 function filterStaffInfo(q){
   const staffSection = document.getElementById('staff');
@@ -1577,8 +1634,11 @@ if(studyToggle){
     if(!chip) return;
     document.querySelectorAll('#studyToggle .chip').forEach(c=>c.classList.remove('active'));
     chip.classList.add('active');
-    document.querySelectorAll('.study-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.study-panel').forEach(p=>{ p.classList.remove('active'); p.style.display=''; });
     document.getElementById(chip.dataset.study + 'Panel').classList.add('active');
+    document.getElementById('search').value = '';
+    state.q = '';
+    filterStudy('');
     if(chip.dataset.study === 'quiz') startQuiz();
   });
 }
